@@ -3,145 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lngual</title>
-<style>
-  :root {
-    --bg: #ffffff;
-    --fg: #111111;
-    --muted: #6b6b6b;
-    --accent: #9328FF;
-    --border: #e5e5e5;
-    --card-hover: #fbfafd;
-  }
-  * { box-sizing: border-box; }
-  html, body { height: 100%; }
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background: var(--bg);
-    color: var(--fg);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-  .page {
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  main {
-    flex: 1;
-    max-width: 640px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 96px 28px 64px;
-  }
-  .brand {
-    font-size: 36px;
-    font-weight: 600;
-    letter-spacing: -0.5px;
-    margin: 0;
-  }
-  .accent-bar {
-    width: 36px;
-    height: 3px;
-    background: var(--accent);
-    border-radius: 2px;
-    margin: 14px 0 56px;
-  }
-  .section-label {
-    text-transform: uppercase;
-    letter-spacing: 1.4px;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--muted);
-    margin: 0 0 16px;
-  }
-  .cards {
-    display: grid;
-    gap: 10px;
-  }
-  .card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    text-decoration: none;
-    color: var(--fg);
-    background: #ffffff;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px 22px;
-    transition: background-color 0.15s ease, border-color 0.15s ease;
-  }
-  .card:hover {
-    background: var(--card-hover);
-    border-color: var(--accent);
-  }
-  .card-text { display: block; }
-  .card-title {
-    font-size: 16px;
-    font-weight: 600;
-    margin: 0 0 2px;
-  }
-  .card-desc {
-    font-size: 14px;
-    color: var(--muted);
-    margin: 0;
-  }
-  .chev {
-    color: var(--muted);
-    font-size: 22px;
-    line-height: 1;
-    flex-shrink: 0;
-    margin-left: 16px;
-    transition: color 0.15s ease, transform 0.15s ease;
-  }
-  .card:hover .chev {
-    color: var(--accent);
-    transform: translateX(2px);
-  }
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 28px;
-    text-align: center;
-    color: var(--muted);
-    font-size: 13px;
-  }
-  footer a { color: var(--muted); text-decoration: none; }
-  footer a:hover { color: var(--accent); }
-  footer p { margin: 0 0 4px; }
-  footer p:last-child { margin: 0; }
-</style>
+<title>Legal &amp; Support | Lngual</title>
+<meta name="description" content="Policies and support for Lngual, a language exchange app. Read the privacy policy, request account deletion, or contact support.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="play-store-icon-512.png">
+<link rel="apple-touch-icon" href="play-store-icon-512.png">
+<meta property="og:title" content="Legal &amp; Support | Lngual">
+<meta property="og:description" content="Policies and support for Lngual, a language exchange app.">
+<meta property="og:image" content="play-store-feature-1024x500.png">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="page">
 
-<main>
-  <h1 class="brand">Lngual</h1>
-  <div class="accent-bar"></div>
+<header class="site-header">
+  <div class="inner">
+    <a class="mark" href="index.html">
+      <img src="play-store-icon-512.png" alt="" width="26" height="26">
+      <span>Lngual</span>
+    </a>
+    <nav>
+      <a href="privacy.html">Privacy</a>
+      <a href="delete-account.html">Account deletion</a>
+      <a href="mailto:support@lngual.com">Support</a>
+    </nav>
+  </div>
+</header>
 
-  <p class="section-label">Legal &amp; Support</p>
+<main class="hub">
+  <p class="eyebrow">Legal &amp; Support</p>
+  <h1>Policies and support for Lngual</h1>
+  <p class="lede">Lngual is a language exchange app for practising with native speakers, joining meetups, and tracking your progress. The documents below explain how your information is handled and how to close your account.</p>
 
   <div class="cards">
     <a class="card" href="privacy.html">
       <span class="card-text">
         <span class="card-title">Privacy Policy</span>
-        <span class="card-desc">How we handle and protect your information.</span>
+        <span class="card-desc">What information we collect, how it is used and shared, and the rights available to you.</span>
+        <span class="card-meta">Effective 15 August 2026</span>
       </span>
-      <span class="chev">&rsaquo;</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
     </a>
     <a class="card" href="delete-account.html">
       <span class="card-text">
         <span class="card-title">Account Deletion</span>
-        <span class="card-desc">Request the deletion of your account and data.</span>
+        <span class="card-desc">How to delete your account and data from the app or by email, and what is removed.</span>
+        <span class="card-meta">Effective 15 August 2026</span>
       </span>
-      <span class="chev">&rsaquo;</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
     </a>
+  </div>
+
+  <div class="panel">
+    <h2>Contact us</h2>
+    <p>For questions about these documents, your account, or anything else in the app, email <a href="mailto:support@lngual.com">support@lngual.com</a>.</p>
+    <p>Requests that require verification, including data deletion requests sent by email, are completed within a reasonable period, typically within thirty (30) days.</p>
   </div>
 </main>
 
 <footer>
-  <p>For support, contact <a href="mailto:support@lngual.com">support@lngual.com</a></p>
-  <p>&copy; 2026 Lngual. All rights reserved.</p>
+  <div class="inner">
+    <p>&copy; 2026 Lngual. All rights reserved.</p>
+    <nav>
+      <a href="privacy.html">Privacy</a>
+      <a href="delete-account.html">Account deletion</a>
+      <a href="mailto:support@lngual.com">Support</a>
+    </nav>
+  </div>
 </footer>
 
 </div>
