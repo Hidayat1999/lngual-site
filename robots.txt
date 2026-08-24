@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /cdn-cgi/l/
+Disallow: /cdn-cgi/
 
 Sitemap: https://lngual.com/sitemap.xml
