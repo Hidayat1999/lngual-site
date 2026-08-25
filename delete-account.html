@@ -6,8 +6,8 @@
 <title>Account Deletion | Lngual</title>
 <meta name="description" content="How to delete your Lngual account and personal information, from within the app or by email, and what is removed or retained.">
 <meta name="theme-color" content="#ffffff">
-<link rel="icon" href="/play-store-icon-512.png">
-<link rel="apple-touch-icon" href="/play-store-icon-512.png">
+<link rel="icon" href="/icon-64.png">
+<link rel="apple-touch-icon" href="/icon-180.png">
 <meta property="og:title" content="Account Deletion | Lngual">
 <meta property="og:description" content="How to delete your Lngual account and personal information.">
 <meta property="og:type" content="article">
@@ -20,27 +20,41 @@
 <meta property="og:image:alt" content="Lngual — language exchange app">
 <meta property="og:site_name" content="Lngual">
 <link rel="stylesheet" href="/style.css">
+<script>document.documentElement.className+=" js-reveal";setTimeout(function(){if(!window.__revealBooted){var n=document.querySelectorAll(".reveal");for(var i=0;i<n.length;i++){n[i].className+=" is-visible"}}},2000);</script>
 </head>
 <body>
-<div class="page">
+<a class="skip-link" href="#main">Skip to content</a>
 
-<header class="site-header">
-  <div class="inner">
-    <a class="mark" href="/">
-      <img src="/play-store-icon-512.png" alt="" width="26" height="26">
+<header class="site-header" data-header>
+  <div class="wrap hdr-inner">
+    <a class="hdr-brand" href="/">
+      <img class="hdr-logo" src="/icon-64.png" alt="" width="28" height="28" decoding="async">
       <span>Lngual</span>
     </a>
-    <nav>
-      <a href="/privacy">Privacy</a>
-      <a href="/delete-account" aria-current="page">Account deletion</a>
-      <a href="mailto:support@lngual.com">Support</a>
+
+    <nav class="hdr-nav" aria-label="Primary">
+      <ul class="hdr-links" role="list">
+        <li><a class="hdr-link" href="/#how">How it works</a></li>
+        <li><a class="hdr-link" href="/#features">Features</a></li>
+        <li><a class="hdr-link" href="mailto:support@lngual.com">Support</a></li>
+      </ul>
+
+      <a class="btn btn-primary btn-pill hdr-cta" href="https://play.google.com/store/apps/details?id=com.polylngual.lngual">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+          <path d="M3.6 2.2c-.33.35-.52.89-.52 1.59v16.42c0 .7.19 1.24.52 1.59l.06.05 9.2-9.2v-.22l-9.2-9.2z"/>
+          <path d="M16.06 15.72 12.99 12.65v-.22l3.07-3.07.07.04 3.64 2.07c1.04.59 1.04 1.55 0 2.14l-3.64 2.07z"/>
+          <path d="M16.13 15.68 12.99 12.54 3.73 21.8c.34.36.91.41 1.55.05z"/>
+          <path d="M16.13 9.4 5.28 3.27c-.64-.36-1.21-.31-1.55.05l9.26 9.22z"/>
+        </svg>
+        <span><span class="hdr-cta-lead">Get it on </span>Google Play</span>
+      </a>
     </nav>
   </div>
 </header>
 
-<main class="doc">
+<main class="doc" id="main" tabindex="-1">
 
-<div class="doc-header">
+<div class="doc-header reveal reveal--sm">
   <h1>Account Deletion</h1>
   <p class="updated">Effective 15 August 2026</p>
 </div>
@@ -48,14 +62,22 @@
 <p>This page explains how you may request the deletion of your Lngual account and the personal information associated with it. Account deletion is permanent and cannot be reversed once it has been completed.</p>
 
 <h2>Delete Your Account from Within the App</h2>
-<p>The fastest way to delete your account is from within the Lngual application:</p>
-<ol>
-  <li>Open the Lngual app and sign in.</li>
-  <li>Go to <strong>Settings</strong>.</li>
-  <li>Tap <strong>Delete Account</strong>.</li>
-  <li>Confirm the deletion when prompted.</li>
-</ol>
-<p>Your account enters a 30-day grace period during which you can restore it by signing in again. After 30 days, your account and personal information are permanently deleted from our systems.</p>
+
+<div class="doc-steps reveal reveal--sm">
+  <p class="doc-steps__lead">The fastest way to delete your account is from within the Lngual application:</p>
+
+  <ol class="doc-steps__list">
+    <li>Open the Lngual app and sign in.</li>
+    <li>Go to <strong>Settings</strong>.</li>
+    <li>Tap <strong>Delete Account</strong>.</li>
+    <li>Confirm the deletion when prompted.</li>
+  </ol>
+
+  <p class="doc-steps__note">
+    <svg class="doc-steps__note-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.25V12l3.25 2"></path></svg>
+    <span>Your account enters a 30-day grace period during which you can restore it by signing in again. After 30 days, your account and personal information are permanently deleted from our systems.</span>
+  </p>
+</div>
 
 <h2>Request Deletion Without Accessing the App</h2>
 <p>If you are unable to access the Lngual application, you may request account deletion by email. Please send a message to <a href="mailto:support@lngual.com">support@lngual.com</a> from the email address associated with your account, including the following information:</p>
@@ -96,7 +118,7 @@
 </ul>
 <p>To request deletion of events you have created, or any other deletion request that cannot be completed through the application, email <a href="mailto:support@lngual.com">support@lngual.com</a> from the email address associated with your account, with the subject <strong>Data deletion request</strong>, and describe what you would like removed. We will confirm receipt and complete the request within a reasonable period, typically within thirty (30) days.</p>
 
-<div class="callout">
+<div class="callout reveal reveal--sm">
 <p><strong>Need help?</strong> If you have any questions about deleting your account or about the information we hold, please contact <a href="mailto:support@lngual.com">support@lngual.com</a>.</p>
 </div>
 
@@ -104,17 +126,50 @@
 
 </main>
 
-<footer>
-  <div class="inner">
-    <p>&copy; 2026 Lngual. All rights reserved.</p>
-    <nav>
-      <a href="/">Legal &amp; Support</a>
-      <a href="/privacy">Privacy</a>
-      <a href="mailto:support@lngual.com">Support</a>
-    </nav>
+<footer class="ctaf-footer">
+  <div class="wrap">
+    <div class="ctaf-grid" data-stagger>
+      <div class="reveal reveal--sm">
+        <a class="ctaf-wordmark" href="/">
+          <img src="/play-store-icon-512.png" alt="" width="30" height="30" loading="lazy" decoding="async">
+          <span>Lngual</span>
+        </a>
+        <p class="ctaf-desc">
+          Lngual is a language exchange app for practising with native speakers,
+          joining meetups, and tracking your progress.
+        </p>
+      </div>
+
+      <nav class="ctaf-nav reveal reveal--sm" aria-label="Footer">
+        <div>
+          <p class="ctaf-col-title" id="ctaf-col-app">App</p>
+          <ul class="ctaf-list" aria-labelledby="ctaf-col-app">
+            <li><a class="ctaf-link" href="/#how">How it works</a></li>
+            <li><a class="ctaf-link" href="/#features">Features</a></li>
+            <li><a class="ctaf-link" href="/#translation">Translation</a></li>
+            <li><a class="ctaf-link" href="https://play.google.com/store/apps/details?id=com.polylngual.lngual" data-play-link>Get it on Google Play</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="ctaf-col-title" id="ctaf-col-legal">Legal</p>
+          <ul class="ctaf-list" aria-labelledby="ctaf-col-legal">
+            <li><a class="ctaf-link" href="/privacy">Privacy Policy</a></li>
+            <li><a class="ctaf-link" href="/delete-account">Account deletion</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="ctaf-col-title" id="ctaf-col-contact">Contact</p>
+          <ul class="ctaf-list" aria-labelledby="ctaf-col-contact">
+            <li><a class="ctaf-link ctaf-link-mail" href="mailto:support@lngual.com">support@lngual.com</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <p class="ctaf-bottom">&copy; 2026 Lngual. All rights reserved.</p>
   </div>
 </footer>
 
-</div>
+<script src="/reveal.js" defer></script>
 </body>
 </html>

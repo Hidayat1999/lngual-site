@@ -1,376 +1,3430 @@
+/* ===== FOUNDATION — tokens, reset, base, buttons, a11y =============== */
+/* =========================================================================
+   LNGUAL — FOUNDATION LAYER
+   Tokens, reset, base elements, layout primitives, buttons, a11y utilities.
+   Section styles (header, hero, steps, showcase, dark CTA, footer, legal
+   documents) belong in later layers and must build on what is defined here.
+   ========================================================================= */
+
+/* --- 1. TOKENS --------------------------------------------------------- */
+
 :root {
-  --bg: #ffffff;
-  --bg-soft: #f7f7f9;
-  --fg: #17171c;
-  --muted: #5f5f6b;
-  --faint: #8b8b96;
-  --accent: #9328ff;
-  --accent-ink: #6a12c0;
-  --border: #e4e4ea;
-  --border-strong: #d3d3dc;
-  --radius: 10px;
-  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --container: 780px;
+  /* Brand */
+  --brand: #7A1FE0;         /* links, eyebrows, focus ring — 6.8:1 on white */
+  --brand-deep: #5810A0;    /* strong brand text, pressed — 10.5:1 on white */
+  --brand-bright: #8820F0;  /* two-tone headline accent — 6.0:1 on white */
+  --brand-grad: linear-gradient(135deg, #8B22F0, #5A10A4);
+  --brand-grad-hover: linear-gradient(135deg, #7A18DE, #4B0C8C);
+
+  /* Brand tints — backgrounds only, never text */
+  --tint-050: #FAF7FF;  --tint-100: #F3EDFC;  --tint-200: #E7DBF8;
+  --tint-line: rgba(122, 31, 224, 0.16);
+
+  /* Neutrals */
+  --ink: #101828;           /* headings + dark section background */
+  --ink-soft: #1D2939;
+  --body: #475467;          /* primary body copy — 7.7:1 on white */
+  --muted: #667085;         /* secondary copy — 5.0:1 on white */
+  --faint: #98A2B3;         /* decorative text only, never essential */
+  --hairline: rgba(16, 24, 40, 0.08);
+  --hairline-strong: rgba(16, 24, 40, 0.14);
+
+  /* Secondary accents — decorative curves, sparing use */
+  --accent-yellow: #F5BB00;  --accent-teal: #67A2B9;  --accent-coral: #FF7A45;
+  /* text-safe siblings of those hues, AA on white */
+  --accent-teal-ink: #2E6C84;  --accent-coral-ink: #C2410C;
+
+  /* Surfaces */
+  --page-bg: #FFFFFF;
+  --surface: #FFFFFF;
+  --surface-alt: #F9FAFB;
+  --hero-grad: linear-gradient(167deg, #FDFCFF 8%, #F4EEFC 50%, #EEF1F9 92%);
+
+  /* Semantic text — flipped wholesale by .theme-dark */
+  --text-heading: var(--ink);
+  --text-body: var(--body);
+  --text-muted: var(--muted);
+  --focus-color: var(--brand-bright);
+  --focus-halo: #FFFFFF;
+
+  /* Type */
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+
+  --fs-display: clamp(2.75rem, 1.4rem + 6vw, 5rem);          /* 44 → 80 */
+  --fs-h1: clamp(2.125rem, 1.2rem + 3.6vw, 3.25rem);         /* 34 → 52 */
+  --fs-h2: clamp(2rem, 1.15rem + 3.2vw, 3.5rem);             /* 32 → 56 */
+  --fs-h3: clamp(1.25rem, 1.1rem + 0.55vw, 1.5rem);          /* 20 → 24 */
+  --fs-h4: clamp(1.0625rem, 1rem + 0.28vw, 1.1875rem);       /* 17 → 19 */
+  --fs-lede: clamp(1.0625rem, 1.01rem + 0.24vw, 1.125rem);   /* 17 → 18 */
+  --fs-body: clamp(1rem, 0.97rem + 0.13vw, 1.0625rem);       /* 16 → 17 */
+  --fs-small: 0.875rem;
+  --fs-eyebrow: clamp(0.6875rem, 0.66rem + 0.12vw, 0.75rem); /* 11 → 12 */
+
+  --lh-display: 0.98;   --lh-heading: 1.06;  --lh-snug: 1.28;  --lh-body: 1.65;
+  --ls-display: -0.045em; --ls-h2: -0.03em;  --ls-h3: -0.02em; --ls-eyebrow: 0.12em;
+  --fw-medium: 500;     --fw-semibold: 600;  --fw-bold: 700;   --fw-black: 900;
+
+  --measure: 60ch;
+
+  /* Spacing — 4 8 12 16 24 32 40 48 64 80 96 112 */
+  --sp-1: 0.25rem;  --sp-2: 0.5rem;   --sp-3: 0.75rem;  --sp-4: 1rem;
+  --sp-5: 1.5rem;   --sp-6: 2rem;     --sp-7: 2.5rem;   --sp-8: 3rem;
+  --sp-9: 4rem;     --sp-10: 5rem;    --sp-11: 6rem;    --sp-12: 7rem;
+
+  /* Layout */
+  --wrap: 1120px;
+  --wrap-narrow: 760px;
+  --gutter: clamp(1.25rem, 4vw, 2rem);   /* 20 → 32 */
+  --section-y: clamp(4rem, 7vw, 7rem);   /* 64 → 112 */
+  --header-h: 64px;
+
+  /* Radii */
+  --r-xs: 6px;      --r-sm: 10px;     --r-md: 16px;     --r-lg: 20px;
+  --r-xl: 28px;     --r-2xl: 36px;    --r-pill: 999px;  /* --r-xl = big card */
+
+  /* Shadows */
+  --shadow-soft: 0 1px 2px rgba(16, 24, 40, 0.04), 0 4px 12px rgba(16, 24, 40, 0.05);
+  --shadow-card: 0 2px 4px rgba(16, 24, 40, 0.04), 0 14px 32px -10px rgba(16, 24, 40, 0.12);
+  --shadow-lifted: 0 8px 24px -8px rgba(16, 24, 40, 0.14), 0 32px 72px -20px rgba(16, 24, 40, 0.30);
+  --shadow-brand: 0 10px 24px -8px rgba(88, 16, 160, 0.45);
+  --shadow-brand-hover: 0 14px 30px -8px rgba(88, 16, 160, 0.52);
+
+  /* Motion */
+  --dur-fast: 150ms;  --dur: 240ms;  --dur-reveal: 660ms;  --stagger: 70ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --reveal-y: 24px;   /* becomes 0 under prefers-reduced-motion */
 }
 
-* { box-sizing: border-box; }
+/* Dark full-bleed sections: add class="theme-dark" to the <section>. */
+.theme-dark {
+  --text-heading: #FFFFFF;
+  --text-body: #D0D5DD;
+  --text-muted: #B4BCC9;    /* 8.0:1 on --ink */
+  --surface: var(--ink);
+  --surface-alt: #182130;
+  --hairline: rgba(255, 255, 255, 0.14);
+  --hairline-strong: rgba(255, 255, 255, 0.24);
+  --focus-color: #E4D2FF;   /* brand purple is < 3:1 on ink, so go light */
+  --focus-halo: var(--ink);
+  color: var(--text-body);
+  background-color: var(--ink);
+}
+
+/* --- 2. RESET ---------------------------------------------------------- */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
 
 html {
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   scroll-behavior: smooth;
-  scroll-padding-top: 84px;
+  scroll-padding-top: calc(var(--header-h) + 1rem);
 }
+
+body,
+h1, h2, h3, h4, h5, h6,
+p, figure, blockquote, dl, dd, ul, ol { margin: 0; }
+
+ul[class], ol[class] { list-style: none; padding: 0; }
+
+img, video { max-width: 100%; height: auto; display: block; }
+
+svg { max-width: 100%; }
+
+input, button, textarea, select { font: inherit; color: inherit; }
+
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+
+table { border-collapse: collapse; width: 100%; }
+
+[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
+
+[hidden] { display: none !important; }
+
+/* --- 3. BASE ELEMENTS -------------------------------------------------- */
 
 body {
-  margin: 0;
-  font-family: var(--font);
-  font-size: 16.5px;
-  line-height: 1.7;
-  color: var(--fg);
-  background: var(--bg);
-  -webkit-font-smoothing: antialiased;
-}
-
-a { color: var(--accent-ink); }
-
-a:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 3px;
-}
-
-img { max-width: 100%; }
-
-.page {
   min-height: 100vh;
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-body);
+  background-color: var(--page-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-heading);
+  font-weight: var(--fw-black);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-h2);
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+
+h3 {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-h3);
+}
+
+h4, h5, h6 {
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.01em;
+}
+
+/* The signature display treatment. Put it on any element that must shout —
+   the hero h1, or a section h2 that carries the page. */
+.display {
+  font-size: var(--fs-display);
+  font-weight: var(--fw-black);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  color: var(--text-heading);
+  text-wrap: balance;
+}
+
+a {
+  color: var(--brand-deep);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+a:hover { color: var(--brand); }
+
+.theme-dark a { color: #DCC6FF; }
+.theme-dark a:hover { color: #FFFFFF; }
+
+strong, b { font-weight: var(--fw-semibold); }
+
+small { font-size: var(--fs-small); }
+
+hr { border: 0; border-top: 1px solid var(--hairline); margin: var(--sp-8) 0; }
+
+::selection { background: var(--tint-200); color: var(--ink); }
+
+/* --- 4. FOCUS ---------------------------------------------------------- */
+/* Never colour-only: a 3px outline plus a contrasting halo, so the ring
+   reads as a shape change as well as a colour change. */
+
+:focus-visible {
+  outline: 3px solid var(--focus-color);
+  outline-offset: 3px;
+  border-radius: var(--r-xs);
+}
+
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--focus-color);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px var(--focus-halo);
+}
+
+:focus:not(:focus-visible) { outline: none; }
+
+/* --- 5. LAYOUT PRIMITIVES ---------------------------------------------- */
+
+.wrap,
+.wrap-narrow {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.wrap { max-width: var(--wrap); }
+.wrap-narrow { max-width: var(--wrap-narrow); }
+
+.section {
+  position: relative;
+  padding-block: var(--section-y);
+}
+
+.section-sm { padding-block: calc(var(--section-y) * 0.62); }
+.section-lg { padding-block: calc(var(--section-y) * 1.25); }
+.section-flush-top { padding-top: 0; }
+.section-flush-bottom { padding-bottom: 0; }
+.stack > * + * { margin-top: var(--sp-4); }
+.stack-lg > * + * { margin-top: var(--sp-5); }
+
+/* --- 6. TEXT UTILITIES ------------------------------------------------- */
+
+.eyebrow {
+  display: block;
+  margin: 0 0 var(--sp-3);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+.theme-dark .eyebrow { color: #D6BBFF; }
+.eyebrow-teal { color: var(--accent-teal-ink); }
+.eyebrow-coral { color: var(--accent-coral-ink); }
+
+.lede {
+  max-width: var(--measure);
+  font-size: var(--fs-lede);
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* Two-tone headline: the second line, or the last word or two, in accent. */
+.accent { color: var(--brand-bright); }
+.theme-dark .accent { color: #C4A0FF; }
+
+.accent-grad { color: var(--brand-bright); }
+
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .accent-grad {
+    background-image: var(--brand-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+.text-ink { color: var(--text-heading); }
+.text-muted { color: var(--text-muted); }
+.text-small { font-size: var(--fs-small); }
+.text-center { text-align: center; }
+.mx-auto { margin-inline: auto; }
+.nowrap { white-space: nowrap; }
+.measure { max-width: var(--measure); }
+
+/* --- 7. BUTTONS -------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-height: 44px;
+  padding: 0.6875rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: var(--r-sm);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  transition:
+    background-color var(--dur) var(--ease),
+    background-image var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease),
+    color var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Sizing */
+.btn-pill { border-radius: var(--r-pill); min-height: 40px; padding: 0.5rem 1.125rem; }
+.btn-lg { min-height: 54px; padding: 0.875rem 1.75rem; font-size: var(--fs-body); border-radius: var(--r-md); }
+.btn-pill.btn-lg { border-radius: var(--r-pill); }
+.btn-block { display: flex; width: 100%; }
+
+/* Primary — the purple gradient */
+.btn-primary {
+  color: #FFFFFF;
+  background-color: var(--brand-deep);   /* fallback under the gradient */
+  background-image: var(--brand-grad);
+  box-shadow: var(--shadow-brand);
+}
+
+.btn-primary:hover {
+  color: #FFFFFF;
+  background-image: var(--brand-grad-hover);
+  box-shadow: var(--shadow-brand-hover);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active { transform: translateY(0); box-shadow: var(--shadow-brand); }
+
+/* Ghost — white with a hairline border */
+.btn-ghost {
+  color: var(--ink);
+  background-color: #FFFFFF;
+  border-color: var(--hairline-strong);
+  box-shadow: var(--shadow-soft);
+}
+
+.btn-ghost:hover {
+  color: var(--brand-deep);
+  background-color: var(--tint-050);
+  border-color: var(--tint-line);
+}
+
+.btn-ghost:active { transform: translateY(1px); }
+
+.theme-dark .btn-ghost {
+  color: #FFFFFF;
+  background-color: transparent;
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: none;
+}
+
+.theme-dark .btn-ghost:hover { color: var(--ink); background-color: #FFFFFF; border-color: #FFFFFF; }
+
+/* Ink — the solid near-black pill (store button, header CTA) */
+.btn-ink { color: #FFFFFF; background-color: var(--ink); border-color: var(--ink); }
+.btn-ink:hover { color: #FFFFFF; background-color: var(--ink-soft); transform: translateY(-1px); }
+.btn-ink:active { transform: translateY(0); }
+
+.theme-dark .btn-ink { color: var(--ink); background-color: #FFFFFF; border-color: #FFFFFF; }
+.theme-dark .btn-ink:hover { color: var(--ink); background-color: #ECEFF4; }
+
+/* Quiet — text-weight action for the header nav */
+.btn-quiet { color: var(--body); background-color: transparent; padding-inline: 0.75rem; }
+.btn-quiet:hover { color: var(--ink); background-color: var(--tint-100); }
+.theme-dark .btn-quiet { color: #D0D5DD; }
+.theme-dark .btn-quiet:hover { color: #FFFFFF; background-color: rgba(255, 255, 255, 0.10); }
+
+/* Inline SVG icons keep their intrinsic size inside flex parents. */
+.icon { display: block; flex: none; }
+
+/* --- 8. ACCESSIBILITY UTILITIES ---------------------------------------- */
+
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: var(--sp-2);
+  left: var(--sp-2);
+  z-index: 999;
+  padding: 0.75rem 1.125rem;
+  border-radius: var(--r-sm);
+  background-color: var(--ink);
+  color: #FFFFFF;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+  box-shadow: var(--shadow-card);
+  transform: translateY(calc(-100% - var(--sp-4)));
+  transition: transform var(--dur) var(--ease);
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  color: #FFFFFF;
+  transform: translateY(0);
+  outline: 3px solid var(--brand-bright);
+  outline-offset: 3px;
+}
+
+/* --- 9. REDUCED MOTION -------------------------------------------------- */
+/* Neutralises the reveal offset and every transform/opacity transition, so
+   scroll-triggered content is simply present. */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --reveal-y: 0px;
+    --dur-fast: 1ms;
+    --dur: 1ms;
+    --dur-reveal: 1ms;
+    --stagger: 0ms;
+  }
+
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .btn:hover,
+  .btn:active { transform: none !important; }
+}
+
+/* ===== MOTION — scroll reveal + sticky header ======================== */
+/* ==========================================================================
+   Motion — scroll reveal + sticky header state
+   Behaviour lives in /reveal.js: it adds .is-visible to .reveal elements and
+   .is-stuck to the header. No-JS safety net (put in <head> of every page):
+   <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+   ========================================================================== */
+
+:root {
+  --reveal-duration: 700ms;
+  --reveal-distance: 24px;
+  --reveal-delay: 0ms;
+  --stagger-step: 70ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.js-reveal .reveal {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-distance), 0);
+  transition:
+    opacity var(--reveal-duration) var(--ease-out),
+    transform var(--reveal-duration) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* Distance variants — set the token, the transition is inherited. */
+.reveal--fade { --reveal-distance: 0px; }
+.reveal--sm   { --reveal-distance: 12px; }
+.reveal--lg   { --reveal-distance: 40px; }
+
+/* One-off delays for elements that are not inside a [data-stagger] parent. */
+.delay-1 { --reveal-delay: 70ms; }
+.delay-2 { --reveal-delay: 140ms; }
+.delay-3 { --reveal-delay: 210ms; }
+.delay-4 { --reveal-delay: 280ms; }
+
+/* Stagger: the delay token is set on the child and inherits down, so it works
+   whether the child IS the .reveal or merely wraps one. Capped at 8 steps. */
+[data-stagger] > *:nth-child(1) { --reveal-delay: 0ms; }
+[data-stagger] > *:nth-child(2) { --reveal-delay: calc(var(--stagger-step) * 1); }
+[data-stagger] > *:nth-child(3) { --reveal-delay: calc(var(--stagger-step) * 2); }
+[data-stagger] > *:nth-child(4) { --reveal-delay: calc(var(--stagger-step) * 3); }
+[data-stagger] > *:nth-child(5) { --reveal-delay: calc(var(--stagger-step) * 4); }
+[data-stagger] > *:nth-child(6) { --reveal-delay: calc(var(--stagger-step) * 5); }
+[data-stagger] > *:nth-child(7) { --reveal-delay: calc(var(--stagger-step) * 6); }
+[data-stagger] > *:nth-child(n + 8) { --reveal-delay: calc(var(--stagger-step) * 7); }
+
+/* Sticky header state. Base layout (position: sticky, height, padding) belongs
+   to the header rules; only the scrolled state is defined here. */
+.site-header {
+  border-bottom: 1px solid transparent; /* reserved so .is-stuck shifts nothing */
+  transition:
+    background-color 240ms ease,
+    border-color 240ms ease,
+    box-shadow 240ms ease;
+}
+
+.site-header.is-stuck {
+  background-color: rgba(255, 255, 255, 0.86);
+  border-bottom-color: var(--hairline, rgba(16, 24, 40, 0.08));
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+@supports ((backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px))) {
+  .site-header.is-stuck {
+    background-color: rgba(255, 255, 255, 0.66);
+    -webkit-backdrop-filter: saturate(180%) blur(12px);
+    backdrop-filter: saturate(180%) blur(12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+
+  .site-header { transition: none; }
+}
+
+@media print {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ===== HERO DECOR — hand-drawn accent curves ========================= */
+/* ---- Hero decorative curves ---- */
+.hero {
+  position: relative;
+  overflow: hidden;          /* clips the curves at the viewport edges = the "bleed" */
+  isolation: isolate;        /* keeps z-index local to the hero */
+}
+.hero-inner {
+  position: relative;
+  z-index: 1;                /* all hero content sits above the curves */
+}
+.hero-decor {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;      /* never intercepts clicks or hover */
+  overflow: hidden;
+}
+.hero-decor .decor {
+  position: absolute;
+  display: block;
+  height: auto;              /* height comes from the viewBox aspect ratio */
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Positions are percentage / viewport based so they scale with the hero.
+   Negative offsets are what pushes each curve off the edge. */
+.decor-1 { left: -3%;  top: 7%;    width: clamp(150px, 18vw, 260px); opacity: .9;  animation: decorFloatA 11s ease-in-out infinite alternate; }
+.decor-2 { right: -4%; top: 4%;    width: clamp(130px, 16vw, 210px); opacity: .95; animation: decorFloatB 13.5s ease-in-out infinite alternate; }
+.decor-3 { left: -5%;  top: 45%;   width: clamp(110px, 13vw, 170px); opacity: .85; animation: decorFloatC 9.5s ease-in-out infinite alternate; }
+.decor-4 { right: -6%; top: 38%;   width: clamp(120px, 15vw, 200px); opacity: .9;  animation: decorFloatA 12.5s ease-in-out infinite alternate; animation-delay: -3s; }
+.decor-5 { left: 5%;   bottom: 12%; width: clamp(100px, 11vw, 160px); opacity: .8;  animation: decorFloatB 8.5s ease-in-out infinite alternate; animation-delay: -1.5s; }
+
+/* Three float shapes, mixed with five different durations/delays so nothing syncs up. */
+@keyframes decorFloatA { from { transform: translate3d(0, 0, 0); }            to { transform: translate3d(0, -12px, 0); } }
+@keyframes decorFloatB { from { transform: translate3d(0, 0, 0) rotate(0deg); } to { transform: translate3d(0, 9px, 0) rotate(1.5deg); } }
+@keyframes decorFloatC { from { transform: translate3d(0, 4px, 0); }          to { transform: translate3d(0, -8px, 0); } }
+
+/* Tablet: pull the mid-height curves further off-edge and shrink them. */
+@media (max-width: 1024px) {
+  .decor-3 { left: -9%;  width: clamp(100px, 14vw, 140px); }
+  .decor-4 { right: -10%; width: clamp(110px, 16vw, 160px); }
+}
+
+/* Under 768px: hide the two that sit at headline/lede height. */
+@media (max-width: 767px) {
+  .decor-3, .decor-4 { display: none; }
+  .decor-1 { left: -10%; top: 2%;  width: 132px; opacity: .75; }
+  .decor-2 { right: -12%; top: 1%; width: 116px; opacity: .8; }
+  .decor-5 { left: -6%; bottom: 6%; width: 96px; opacity: .6; }
+}
+
+/* Under 480px: only the two top corner curves survive, tucked well off-edge. */
+@media (max-width: 479px) {
+  .decor-5 { display: none; }
+  .decor-1 { left: -16%; width: 110px; }
+  .decor-2 { right: -18%; width: 100px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-decor .decor { animation: none !important; transform: none !important; }
+}
+
+DECISIONS
+- Every path is stroke-only (`fill="none"` on the svg AND no fill on the path), `stroke-linecap="round"`, `stroke-linejoin="round"`, width 6-8. Each is two chained cubic beziers with deliberately uneven control points, so no curve reads as a circular arc.
+- Mobile hiding: `.decor-3` (coral, mid-left) and `.decor-4` (teal, mid-right) are the ones that sit at headline and lede height, so they are `display: none` below 768px. `.decor-5` goes at 480px. `.decor-1` and `.decor-2` stay because they sit in the top corners above the content.
+- Contrast safety: nothing is placed behind the centred text column at desktop widths — the curves live in the outer 0-18% and 82-100% bands. Give `.hero-inner` a `max-width` around 780-880px with `margin-inline: auto` and text never crosses a stroke. Opacity is dialled per curve (.8-.95) so a stroke that does clip a wide element still stays quiet.
+- `overflow: hidden` lives on both `.hero` and `.hero-decor`, so the page body never gains a horizontal scrollbar from the negative offsets.
+- `will-change` is deliberately omitted — five permanently-composited layers is not worth the memory; `translate3d` in the keyframes already promotes them during animation.
+- No external requests, no filters, no masks. Total added CSS ~1.6KB, markup ~2.2KB.
+
+/* ===== HEADER ======================================================== */
+/* --- HEADER ------------------------------------------------------------- */
+/* Sticky and transparent over the hero gradient. The scrolled state
+   (.is-stuck: hairline + translucent backdrop) and the reserved transparent
+   border-bottom live in the motion layer — do not redeclare them here. */
+
+/* Skip link — the first focusable element on every page. It is parked with
+   `top`, not `transform`, on purpose: the global prefers-reduced-motion block
+   neutralises transforms, which would strand a translated skip link on screen.
+   If the base layer already ships a .skip-link, delete this block. */
+
+.skip-link {
+  position: fixed;
+  top: -4rem;
+  left: var(--sp-3);
+  z-index: 100;
+  padding: 0.625rem 1rem;
+  border-radius: var(--r-sm);
+  background: var(--ink);
+  color: #fff;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+}
+
+.skip-link:focus { top: var(--sp-2); }
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.hdr-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  min-height: var(--header-h);
+}
+
+/* Wordmark */
+
+.hdr-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 44px;
+  padding-right: var(--sp-1);
+  border-radius: var(--r-sm);
+  color: var(--ink);
+  font-size: 1.0625rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  text-decoration: none;
+  transition: color var(--dur) var(--ease);
+}
+
+.hdr-brand:hover { color: var(--brand-deep); }
+
+.hdr-brand:focus-visible,
+.hdr-link:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.hdr-logo {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  box-shadow: var(--shadow-soft);
+}
+
+/* Nav — no hamburger: below 640px the text links simply drop out and the
+   wordmark plus the Play button carry the header. Every link here is repeated
+   in the footer, so nothing becomes unreachable on a phone. */
+
+.hdr-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.hdr-links {
+  display: none;
+  align-items: center;
+  gap: var(--sp-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hdr-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding-inline: 0.5rem;
+  border-radius: var(--r-sm);
+  color: var(--body);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+
+.hdr-link:hover {
+  color: var(--ink);
+  background-color: var(--tint-100);
+}
+
+.hdr-cta {
+  position: relative;
+  font-size: var(--fs-small);
+}
+
+.hdr-cta .icon { flex: none; }
+
+/* The button reads "Google Play" until the row is wide enough to carry the
+   full wording alongside the nav links. "Get it on" stays in the accessible
+   name at every width, so the visible label is always contained in it. */
+
+.hdr-cta-lead {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+@media (min-width: 640px) {
+  .hdr-links { display: flex; }
+  .hdr-nav { gap: var(--sp-3); }
+}
+
+@media (min-width: 768px) {
+  .hdr-link { padding-inline: 0.75rem; }
+  .hdr-links { gap: var(--sp-2); }
+
+  .hdr-cta-lead {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+  }
+}
+
+@media print {
+  .skip-link { display: none; }
+  .site-header { position: static; }
+  .hdr-nav { display: none; }
+}
+
+/* ===== HERO ========================================================== */
+/* --- HERO --------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(2.75rem, 5vw, 4.5rem) clamp(3.5rem, 7vw, 6.5rem);
+  background: var(--hero-grad);
+  text-align: center;
+}
+
+.hero__inner { position: relative; z-index: 1; }
+
+/* Decorative open arcs, bleeding off both edges behind the content. */
+.hero__decor {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero__curve {
+  position: absolute;
+  height: auto; /* ratio comes from the svg width/height attributes */
+  fill: none;
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.6;
+}
+
+.hero__curve--tl { top: 2.5rem; left: -3rem;  width: clamp(120px, 15vw, 220px); stroke: var(--brand-bright); }
+.hero__curve--tr { top: 1.5rem; right: -3.5rem; width: clamp(130px, 17vw, 250px); stroke: var(--accent-yellow); opacity: 0.85; }
+.hero__curve--ml { top: 46%;    left: -2.5rem; width: clamp(90px, 9vw, 140px);  stroke: var(--accent-coral); }
+.hero__curve--mr { top: 40%;    right: -2.25rem; width: clamp(90px, 9vw, 140px); stroke: var(--accent-teal); }
+
+/* Status pill */
+.hero__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin: 0 0 var(--sp-5);
+  padding: 0.4375rem 0.9375rem;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--r-pill);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-soft);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  line-height: 1.3;
+  color: var(--body); /* 7.6:1 on --surface */
+}
+
+.hero__dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-image: var(--brand-grad);
+  box-shadow: 0 0 0 3px var(--tint-200);
+}
+
+/* Headline + lede */
+.hero__title { margin: 0 0 var(--sp-5); }
+.hero__title .accent { display: block; }
+
+.hero__lede {
+  max-width: 42rem;
+  margin-block: 0;
+  margin-inline: auto;
+  color: var(--body); /* --muted is 4.4:1 on the tinted hero background and fails AA */
+}
+
+.hero__break { display: none; }
+
+/* Buttons */
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-6);
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.hero__store {
+  gap: var(--sp-3);
+  min-height: 62px;
+  padding: 0.5rem 1.5rem;
+}
+
+/* Paint mode is declared here, not inherited from whatever .icon decides. */
+.hero__icon { flex: none; }
+.hero__icon--solid { fill: currentColor; stroke: none; }
+.hero__icon--line { fill: none; stroke: currentColor; }
+
+.hero__store-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  min-width: 0;
+}
+
+.hero__store-kicker {
+  font-size: 0.6875rem;
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+}
+
+.btn-primary .hero__store-kicker { color: var(--tint-200); } /* 5.1:1 on the gradient */
+.btn-ghost .hero__store-kicker { color: var(--brand); }      /* 6.7:1 on --surface */
+.btn-ghost:hover .hero__store-kicker { color: var(--brand-deep); }
+
+.hero__store-name {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+/* Hero product mock — a built-in illustration of the app, never a screenshot.
+   Everything is markup; the only image is the 22px app icon in the phone's app
+   bar. All copy inside is illustrative product content, and the whole block is
+   one role="img" with a single label, so none of it reaches the a11y tree. */
+
+.hero__mock {
+  position: relative;
+  isolation: isolate;              /* keeps the negative-z glow inside the card */
+  max-width: 940px;
+  margin: 0 auto;
+  padding: clamp(1rem, 2.4vw, 2rem);
+  border: 1px solid var(--tint-line);
+  border-radius: var(--r-xl);
+  background-color: var(--surface);
+  background-image: linear-gradient(163deg, var(--tint-050) 4%, var(--tint-100) 54%, var(--surface-alt) 100%);
+  box-shadow: var(--shadow-lifted);
+  text-align: left;                /* the hero itself is centred */
+}
+
+.heromock__glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background-image: radial-gradient(56% 52% at 24% 32%, var(--tint-200), transparent 72%);
+  pointer-events: none;
+}
+
+.heromock__grid {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+/* --- Phone -------------------------------------------------------------- */
+
+.heromock__phone {
+  position: relative;
+  width: 100%;
+  max-width: 272px;
+  padding: 8px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 34px;
+  background-color: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+.heromock__notch {
+  position: absolute;
+  top: 17px;
+  left: 50%;
+  z-index: 2;
+  width: 46px;
+  height: 5px;
+  margin-left: -23px;
+  border-radius: var(--r-pill);
+  background-color: var(--hairline-strong);
+}
+
+.heromock__screen {
+  overflow: hidden;
+  padding-top: 15px;
+  border: 1px solid var(--hairline);
+  border-radius: 27px;
+  background-color: var(--surface-alt);
+}
+
+.heromock__appbar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 0.4375rem 0.75rem 0.5rem;
+  background-color: var(--surface);
+}
+
+.heromock__appicon {
+  flex: none;
+  width: 22px;
+  height: 22px;   /* beats the reset's img{height:auto} */
+  border-radius: 7px;
+}
+
+.heromock__appname {
+  font-size: 0.8125rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.01em;
+  color: var(--text-heading);
+}
+
+.heromock__glyph { margin-left: auto; }
+
+.heromock__tabs {
+  display: flex;
+  gap: var(--sp-4);
+  padding: 0 0.75rem;
+  border-bottom: 1px solid var(--hairline);
+  background-color: var(--surface);
+}
+
+.heromock__tab {
+  position: relative;
+  padding-bottom: 0.4375rem;
+  font-size: 0.6875rem;
+  font-weight: var(--fw-semibold);
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.heromock__tab--on { color: var(--brand-deep); }
+
+.heromock__tab--on::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  border-radius: var(--r-pill);
+  background-image: var(--brand-grad);
+}
+
+/* --- Feed --------------------------------------------------------------- */
+
+.heromock__feed {
+  position: relative;
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+/* The third post runs under this fade, so the feed reads as scrollable. */
+.heromock__feed::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 44px;
+  background-image: linear-gradient(to top, var(--surface-alt), transparent);
+  pointer-events: none;
+}
+
+.heromock__post {
+  padding: 0.5625rem 0.625rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.heromock__post--cut {
+  overflow: hidden;
+  max-height: 62px;
+}
+
+.heromock__head {
+  display: flex;
+  align-items: center;
+  gap: 0.4375rem;
+}
+
+.heromock__avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-pill);
+  background-color: var(--brand-deep);
+  background-image: var(--brand-grad);
+  color: var(--page-bg);
+  font-size: 0.6875rem;
+  font-weight: var(--fw-bold);
+  line-height: 1;
+}
+
+/* The text-safe accent siblings, so the white monogram still clears AA. */
+.heromock__avatar--teal  { background-color: var(--accent-teal-ink);  background-image: none; }
+.heromock__avatar--coral { background-color: var(--accent-coral-ink); background-image: none; }
+
+.heromock__who {
+  display: grid;
+  min-width: 0;
+}
+
+.heromock__name {
+  font-size: 0.8125rem;
+  font-weight: var(--fw-bold);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--text-heading);
+}
+
+.heromock__pair {
+  display: flex;
+  align-items: center;
+  gap: 0.3125rem;
+  min-width: 0;
+}
+
+.heromock__level {
+  overflow: hidden;
+  font-size: 0.625rem;
+  line-height: 1.5;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--body);
+}
+
+.heromock__text {
+  margin: 0.4375rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--body);
+}
+
+.heromock__stats {
+  display: flex;
+  gap: 0.875rem;
+  margin: 0.5rem 0 0;
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  color: var(--body);
+}
+
+.heromock__stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.heromock__nav {
+  position: relative;               /* sits above the feed fade */
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.5rem 0.625rem 0.625rem;
+  border-top: 1px solid var(--hairline);
+  background-color: var(--surface);
+}
+
+.heromock__navicon { color: var(--muted); }
+.heromock__navicon--on { color: var(--brand-deep); }
+
+/* --- Floating voice-message card ---------------------------------------- */
+
+.heromock__float {
+  position: absolute;
+  right: -1.5rem;
+  bottom: -1.25rem;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.6875rem 0.5rem 0.5rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-lifted);
+}
+
+.heromock__play {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--r-pill);
+  background-color: var(--brand-deep);
+  background-image: var(--brand-grad);
+  color: var(--page-bg);
+}
+
+.heromock__play svg { fill: currentColor; stroke: none; }
+
+.heromock__floatbody { display: grid; gap: 1px; }
+
+.heromock__floatlabel {
+  font-size: 0.6875rem;
+  font-weight: var(--fw-bold);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--text-heading);
+}
+
+.heromock__floatrow {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.heromock__wave { color: var(--brand); opacity: 0.5; }
+
+.heromock__floattime {
+  font-size: 0.625rem;
+  line-height: 1.4;
+  color: var(--body);
+}
+
+/* --- Side cards --------------------------------------------------------- */
+
+.heromock__side { display: none; }   /* phone only until 960px */
+
+.heromock__card {
+  display: grid;
+  align-content: center;
+  padding: clamp(0.875rem, 1.3vw, 1.125rem);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+.heromock__card--event {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--sp-4);
+  align-items: center;
+}
+
+.heromock__map { flex: none; }
+.heromock__map-bg { fill: var(--tint-100); }
+.heromock__map-road { fill: none; stroke: var(--tint-200); stroke-width: 5; }
+.heromock__map-pin { fill: var(--brand-deep); }
+.heromock__map-dot { fill: var(--page-bg); }
+
+.heromock__eyebrow {
+  margin: 0 0 0.25rem;
+  font-size: 0.625rem;
+  font-weight: var(--fw-bold);
+  line-height: 1.4;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+.heromock__cardtitle {
+  margin: 0;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--text-heading);
+}
+
+.heromock__cardmeta {
+  margin: 0.1875rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--body);
+}
+
+.heromock__chiprow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3125rem;
+  margin: 0.4375rem 0 0;
+}
+
+/* Profile language rows: code badge, language, level. */
+.heromock__lang {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 0;
+  padding: 0.3125rem 0;
+}
+
+.heromock__lang + .heromock__lang { border-top: 1px solid var(--hairline); }
+
+.heromock__code {
+  min-width: 26px;
+  padding: 0.0625rem 0.25rem;
+  border-radius: var(--r-xs);
+  background-color: var(--tint-100);
+  color: var(--brand-deep);
+  font-size: 0.625rem;
+  font-weight: var(--fw-bold);
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.heromock__langname {
+  font-size: 0.75rem;
+  font-weight: var(--fw-semibold);
+  line-height: 1.4;
+  color: var(--text-heading);
+}
+
+.heromock__langlevel {
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  color: var(--body);
+}
+
+.heromock__chip {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  padding: 0.0625rem 0.4375rem;
+  border: 1px solid var(--tint-line);
+  border-radius: var(--r-pill);
+  background-color: var(--tint-050);
+  color: var(--brand-deep);
+  font-size: 0.625rem;
+  font-weight: var(--fw-semibold);
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.heromock__xprow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem 0.75rem;
+  align-items: baseline;
+  margin: 0;
+}
+
+.heromock__xp {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.01em;
+  color: var(--text-heading);
+}
+
+.heromock__streak {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: var(--fw-semibold);
+  color: var(--accent-coral-ink);
+}
+
+.heromock__bar {
+  display: block;
+  overflow: hidden;
+  height: 6px;
+  margin: 0.625rem 0 0;
+  border-radius: var(--r-pill);
+  background-color: var(--tint-100);
+}
+
+.heromock__barfill {
+  display: block;
+  width: 68%;
+  height: 100%;
+  border-radius: inherit;
+  background-image: var(--brand-grad);
+}
+
+/* --- Shared icon paint --------------------------------------------------- */
+
+.heromock__glyph,
+.heromock__navicon,
+.heromock__wave,
+.heromock__stats svg,
+.heromock__streak svg {
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.heromock__wave { stroke-width: 2; }
+.heromock__streak svg { stroke-width: 1.4; }
+
+/* --- Responsive ---------------------------------------------------------- */
+
+@media (min-width: 60rem) {
+  .heromock__grid {
+    grid-template-columns: minmax(0, 272px) minmax(0, 1fr);
+    justify-items: stretch;
+  }
+
+  /* Three equal rows filling the phone's height, so the block reads as one
+     composition instead of a stack of cards that happens to sit alongside. */
+  .heromock__side {
+    display: grid;
+    grid-auto-rows: 1fr;
+    gap: 0.75rem;
+  }
+
+  .heromock__float { right: -2.25rem; }   /* into the column gap, never over a card */
+}
+
+/* Between the two, the stage would be a wide empty panel around one phone. */
+@media (max-width: 59.9375rem) {
+  .hero__mock { max-width: 420px; }
+}
+
+/* Under 600px the stage is only a ring around the phone, so it steps back and
+   the phone becomes the object, carrying the anchoring shadow itself. The
+   floating card would crowd or overflow the phone at this width. */
+@media (max-width: 37.5rem) {
+  .hero__mock {
+    padding: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .heromock__glow { display: none; }
+  .heromock__phone { box-shadow: var(--shadow-lifted); }
+  .heromock__float { display: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .heromock__float { animation: heromock-float 7s var(--ease) infinite alternate; }
+}
+
+@keyframes heromock-float {
+  from { transform: translateY(3px); }
+  to   { transform: translateY(-5px); }
+}
+/* Fact strip */
+.hero__facts {
+  overflow: hidden;
+  max-width: 940px;
+  margin: clamp(2rem, 4vw, 3rem) auto 0;
+  padding: 0;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-card);
+  list-style: none;
+}
+
+.hero__fact { padding: var(--sp-5) var(--sp-4); }
+.hero__fact + .hero__fact { border-top: 1px solid var(--hairline); }
+
+.hero__fact-label {
+  margin: 0;
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-bold);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--text-heading);
+}
+
+.hero__fact-sub {
+  margin: var(--sp-1) 0 0;
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: var(--muted); /* 4.9:1 on --surface */
+  text-wrap: balance;
+}
+
+@media (min-width: 40rem) {
+  .hero__break { display: inline; }
+}
+
+@media (min-width: 45rem) {
+  .hero__facts { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .hero__fact { padding-inline: var(--sp-5); }
+  .hero__fact + .hero__fact { border-top: 0; border-left: 1px solid var(--hairline); }
+}
+
+@media (max-width: 56.1875rem) {
+  .hero__curve--ml,
+  .hero__curve--mr { display: none; }
+}
+
+@media (max-width: 35rem) {
+  .hero__curve { opacity: 0.45; stroke-width: 8; }
+  .hero__curve--tl { top: 0.75rem; left: -2.5rem; }
+  .hero__curve--tr { top: 0.5rem; right: -3rem; }
+  .hero__store { width: 100%; }
+}
+
+/* Safety net in case the shared .reveal primitive is not itself guarded. */
+@media (prefers-reduced-motion: reduce) {
+  .hero__facts {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ===== HOWITWORKS ==================================================== */
+/* --- HOW IT WORKS ------------------------------------------------------ */
+
+.hiw {
+  background-color: var(--surface);
+  --hiw-gap: clamp(2.25rem, 4.4vw, 3.5rem);            /* 36 -> 56 */
+  --hiw-num: clamp(3.25rem, 2.1rem + 4.4vw, 4.75rem);  /* 52 -> 76 */
+}
+
+.hiw__intro {
+  max-width: var(--wrap-narrow);
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.hiw__intro h2 { margin-bottom: var(--sp-4); }
+
+.hiw__intro h2 .accent { display: block; }
+
+/* Steps ---------------------------------------------------------------- */
+
+.hiw__steps {
+  display: grid;
+  gap: var(--sp-8) var(--hiw-gap);
+}
+
+.hiw__step {
+  position: relative;
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--hairline);
+}
+
+/* The numeral is the only visual step marker sighted readers get, so it has
+   to clear AA large-text contrast (>= 3:1). Brand gradient runs 5.98:1 ->
+   10.5:1 on white; the fallback colour is 6.78:1. */
+.hiw__num {
+  display: block;
+  margin-bottom: var(--sp-2);
+  font-size: var(--hiw-num);
+  font-weight: var(--fw-black);
+  line-height: 1;
+  letter-spacing: var(--ls-display);
+  color: var(--brand);
+}
+
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .hiw__num {
+    background-image: linear-gradient(160deg, var(--brand-bright), var(--brand-deep));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* Forced-colors drops background images; without this the clipped text would
+   paint transparent and the numerals would disappear entirely. */
+@media (forced-colors: active) {
+  .hiw__num {
+    background-image: none;
+    color: CanvasText;
+  }
+}
+
+.hiw__step h3 { margin-bottom: var(--sp-2); }
+
+.hiw__step p {
+  max-width: 38ch;
+  color: var(--text-body);
+  text-wrap: pretty;
+}
+
+/* Desktop connector motif --------------------------------------------- */
+
+.hiw__link { display: none; }
+
+/* Shape rules belong to the shape, not the breakpoint: outside the media
+   query these paths would otherwise fall back to the SVG default fill:black. */
+.hiw__link path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (min-width: 768px) {
+  .hiw__steps { grid-template-columns: repeat(3, 1fr); }
+
+  .hiw__link {
+    display: block;
+    position: absolute;
+    top: calc(var(--hiw-num) * 0.46 + var(--sp-4));
+    left: calc(var(--hiw-gap) * -1 + 0.25rem);
+    width: calc(var(--hiw-gap) - 0.5rem);
+    height: auto;
+    transform: translateY(-50%);
+    color: var(--tint-line);
+  }
+}
+
+/* ===== FEATURES ====================================================== */
+/* ==========================================================================
+   Features — eyebrow, two-tone h2, six-card grid (1 / 2 / 3 columns)
+   Depends on the foundation layer (tokens, .section, .wrap, .eyebrow, .accent)
+   and the motion layer (.reveal, [data-stagger]).
+   ========================================================================== */
+
+.features {
+  background-color: var(--tint-050);
+}
+
+.features-head {
+  margin-bottom: clamp(2rem, 4vw, var(--sp-8));
+}
+
+/* Forces the two-tone break, so the accent always starts its own line. */
+.features-title-line {
+  display: block;
+}
+
+.features-grid {
+  display: grid;
+  /* minmax(0, …) on every track, including the single-column one: a long word
+     must overflow its own card, never widen the grid and scroll the page. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(0.875rem, 2.2vw, var(--sp-5));
+}
+
+@media (min-width: 620px) {
+  .features-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 960px) {
+  .features-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.features-item {
+  display: flex;
+}
+
+/* The hover surface is a separate element from the .reveal <li>: the reveal
+   owns opacity/transform, the card owns the hover transition. Putting both
+   on one element makes the later `transition` shorthand clobber the other. */
+.features-card {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  background-color: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-soft);
+  transition:
+    border-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
+}
+
+.features-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--sp-4);
+  border: 1px solid var(--tint-line);
+  border-radius: 14px;
+  background-color: var(--tint-100);
+  color: var(--brand-deep);
+  transition:
+    background-color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease);
+}
+
+.features-card-title {
+  margin-bottom: var(--sp-2);
+}
+
+/* Semantic token, not the raw --body value, so the card follows .theme-dark
+   if this block is ever reused on a dark surface. */
+.features-card-body {
+  color: var(--text-body);
+  text-wrap: pretty;
+}
+
+/* Hover lift — pointer devices only, so it never sticks after a tap. */
+@media (hover: hover) and (pointer: fine) {
+  .features-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--tint-line);
+    box-shadow: var(--shadow-card);
+  }
+
+  .features-card:hover .features-icon {
+    background-color: var(--tint-200);
+    border-color: var(--brand-bright);
+  }
+}
+
+/* Higher specificity than the hover rule above, so the guard holds even if
+   the two blocks are ever reordered when the layers are concatenated. */
+@media (prefers-reduced-motion: reduce) {
+  .features .features-card:hover { transform: none; }
+}
+
+/* ===== SHOWCASE ====================================================== */
+/* --- SHOWCASE: ON-DEMAND TRANSLATION ------------------------------------ */
+
+.tx {
+  /* Flat fallback under the gradient so text is never on an undefined ground. */
+  background-color: var(--tint-050);
+  background-image: linear-gradient(167deg, var(--tint-050) 6%, var(--tint-100) 52%, var(--surface-alt) 96%);
+}
+
+/* No overflow:hidden here — nothing reaches the edge, and clipping would cut
+   off the mock's drop shadow once card padding drops to 1.5rem on narrow screens. */
+.tx__card {
+  display: grid;
+  gap: clamp(2.25rem, 5vw, 3.5rem);
+  align-items: center;
+  padding: clamp(1.5rem, 4.4vw, 3.25rem);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+@media (min-width: 600px) { .tx__card { border-radius: var(--r-2xl); } }
+
+@media (min-width: 900px) {
+  .tx__card { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+
+/* Copy column ------------------------------------------------------------ */
+
+.tx__copy { display: grid; gap: var(--sp-4); }
+
+/* Grid gap owns the vertical rhythm; inherited h2/p/ul margins would double it. */
+.tx__copy > * { margin: 0; }
+
+.tx__copy h2 .accent { display: block; }
+
+.tx__points {
+  display: grid;
+  gap: var(--sp-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tx__points li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--sp-3);
+  align-items: start;
+}
+
+.tx__check { margin-top: 0.1em; }
+.tx__check circle { fill: var(--tint-100); }
+
+.tx__check path {
+  fill: none;
+  stroke: var(--brand-deep);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tx__more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  justify-self: start;
+  margin-top: var(--sp-1);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+}
+
+.tx__more:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.tx__more svg { transition: transform var(--dur) var(--ease); }
+.tx__more:hover svg { transform: translateX(3px); }
+
+/* Visual column: an illustrative chat mock, never a screenshot ----------- */
+
+.tx__mock {
+  max-width: 400px;
+  margin-inline: auto;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-lifted);
+}
+
+.tx__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.tx__avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r-pill);
+  background-color: var(--brand-deep);
+  background-image: var(--brand-grad);
+  color: #FFFFFF;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold);
+  line-height: 1;
+}
+
+.tx__who { display: grid; min-width: 0; }
+
+.tx__name {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  line-height: 1.3;
+  color: var(--text-heading);
+}
+
+/* 11px label — pinned to the stronger body ink so it clears 4.5:1 on --surface. */
+.tx__sub {
+  overflow: hidden;
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-body, #475467);
+}
+
+.tx__dots { flex: none; margin-left: auto; fill: var(--faint); }
+
+/* Thread ----------------------------------------------------------------- */
+
+.tx__thread {
+  display: grid;
+  justify-items: start;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  background-color: var(--surface-alt);
+}
+
+.tx__b {
+  max-width: 92%;
+  margin: 0;
+  padding: 0.5rem 0.8125rem;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  font-size: var(--fs-small);
+  line-height: 1.45;
+}
+
+.tx__b--in {
+  border-bottom-left-radius: 4px;
+  border-color: var(--hairline);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.tx__b--trans {
+  border-bottom-left-radius: 4px;
+  border-color: var(--tint-line);
+  background-color: var(--tint-050);
+}
+
+.tx__b--me {
+  justify-self: end;
+  border-bottom-right-radius: 4px;
+  background-color: var(--brand-deep);
+  background-image: var(--brand-grad);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-brand);
+}
+
+.tx__tag {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.625rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--brand-deep);
+}
+
+/* The translate control is illustrative, so it is a span, not a button. */
+.tx__tap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3125rem;
+  margin-top: calc(var(--sp-1) * -1);
+  padding: 0.3125rem 0.625rem;
+  border: 1px solid var(--tint-line);
+  border-radius: var(--r-pill);
+  background-color: var(--surface);
+  color: var(--brand-deep);
+  font-size: 0.75rem;
+  font-weight: var(--fw-semibold);
+  line-height: 1.2;
+  box-shadow: var(--shadow-soft);
+}
+
+.tx__tap::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border: 2px solid var(--tint-line);
+  border-radius: var(--r-pill);
+  opacity: 0;
+  animation: tx-ping 3.6s var(--ease-out) infinite;
+}
+
+@keyframes tx-ping {
+  0%   { opacity: 0; transform: scale(1); }
+  10%  { opacity: 1; transform: scale(1); }
+  36%  { opacity: 0; transform: scale(1.16); }
+  100% { opacity: 0; transform: scale(1); }
+}
+
+/* 11px caption sitting on --surface-alt — needs the stronger ink for AA. */
+.tx__kept {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  color: var(--text-body, #475467);
+}
+
+.tx__more svg,
+.tx__tag svg,
+.tx__tap svg,
+.tx__kept svg {
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tx__tag svg { stroke-width: 2; }
+.tx__tap svg { stroke-width: 1.3; }
+.tx__kept svg { stroke-width: 1.2; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tx__tap::after { content: none; animation: none; }
+  .tx__more svg { transition: none; }
+  .tx__more:hover svg { transform: none; }
+}
+
+/* ===== CTA FOOTER ==================================================== */
+/* --- Closing CTA (dark) + site footer ----------------------------------- */
+
+.ctaf-cta {
+  /* Inverse ramp is section-local: the shared palette has none, and whether
+     .theme-dark remaps --muted/--body is not something one section can rely
+     on. Ratios vs --ink #101828 / vs the glow peak (composites to #361B68). */
+  --ctaf-on-dark: #FFFFFF;                          /* 21.0:1 / 13.9:1 */
+  --ctaf-on-dark-muted: rgba(255, 255, 255, 0.72);  /*  9.6:1 /  7.8:1 */
+  --ctaf-on-dark-faint: rgba(255, 255, 255, 0.62);  /*  7.4:1 /  6.2:1 */
+  --ctaf-on-dark-line: rgba(255, 255, 255, 0.36);   /*  3.3:1 vs --ink   */
+
+  position: relative;
+  overflow: hidden;    /* decor bleeds off both edges */
+  isolation: isolate;  /* contains .ctaf-decor's negative z-index */
+  text-align: center;
+}
+.ctaf-decor { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+
+/* Peak alpha capped at 0.32: over the resulting #361B68 a lilac accent
+   (#C9A7FF) measures 6.9:1 and white 13.9:1, so both clear AA. */
+.ctaf-glow {
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  width: min(1180px, 170%);
+  height: 120%;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side,
+    color-mix(in srgb, var(--brand-bright) 32%, transparent),
+    color-mix(in srgb, var(--brand-bright) 13%, transparent) 46%,
+    transparent 76%);
+}
+
+/* height:auto is load-bearing: with the height attribute left standing,
+   preserveAspectRatio letterboxes the art and the width clamp does nothing
+   above the viewBox width. */
+.ctaf-curve { position: absolute; height: auto; opacity: 0.5; }
+.ctaf-curve-a { top: 5%; left: clamp(-4.5rem, -4vw, -2.5rem); width: clamp(150px, 17vw, 250px); }
+.ctaf-curve-b { bottom: 4%; right: clamp(-4rem, -3.5vw, -2rem); width: clamp(140px, 16vw, 230px); }
+.ctaf-curve path { fill: none; stroke-width: 8; stroke-linecap: round; }
+.ctaf-s-brand { stroke: var(--brand-bright); }
+.ctaf-s-teal { stroke: var(--accent-teal); opacity: 0.8; }
+.ctaf-s-yellow { stroke: var(--accent-yellow); opacity: 0.55; }
+.ctaf-s-coral { stroke: var(--accent-coral); opacity: 0.55; }
+
+/* Under 768px the curves would land behind the headline, so they step aside
+   and the glow carries the section alone. */
+@media (max-width: 767px) { .ctaf-curve { display: none; } }
+
+.ctaf-cta-inner { position: relative; }
+.ctaf-cta-title { max-width: 16ch; margin-inline: auto; }
+.ctaf-cta-lede { margin: var(--sp-5) auto 0; }
+.ctaf-cta-actions { display: flex; flex-wrap: wrap; justify-content: center; margin: var(--sp-7) 0 0; }
+.ctaf-note { margin: var(--sp-4) 0 0; font-size: var(--fs-small); }
+
+/* Scoped so these tie with any .theme-dark .lede in the base layer and win
+   on source order; unscoped they would lose. */
+.theme-dark .ctaf-cta-lede { color: var(--ctaf-on-dark-muted); }
+.theme-dark .ctaf-note { color: var(--ctaf-on-dark-faint); }
+
+/* .theme-dark a outranks .btn-primary and would tint the label lilac, so
+   white is restated for every state. Border longhand, not a lone
+   border-color, which paints nothing if the shared .btn declares no border.
+   The hairline is needed because the gradient's deep end (#5A10A4) is only
+   1.7:1 on --ink; at 0.36 alpha it measures 3.3:1 (SC 1.4.11). */
+.theme-dark .ctaf-play,
+.theme-dark .ctaf-play:hover,
+.theme-dark .ctaf-play:focus-visible {
+  color: var(--ctaf-on-dark);
+  border: 1px solid var(--ctaf-on-dark-line);
+}
+
+/* The global focus ring is brand purple: 2.6:1 on --ink, all but invisible.
+   Restated in white (21:1) inside the dark section. */
+.theme-dark .ctaf-play:focus-visible {
+  outline: 2px solid var(--ctaf-on-dark);
+  outline-offset: 3px;
+}
+
+/* --- Footer ------------------------------------------------------------- */
+
+.ctaf-footer { padding-block: var(--sp-9) var(--sp-6); background-color: var(--page-bg); }
+.ctaf-grid { display: grid; gap: var(--sp-7); }
+.ctaf-nav { display: grid; gap: var(--sp-6) var(--sp-4); }
+
+.ctaf-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: 1.125rem;
+  font-weight: var(--fw-black);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: var(--r-xs);
+}
+.ctaf-wordmark:hover { color: var(--brand-deep); }
+.ctaf-wordmark img { border-radius: var(--r-xs); }
+
+.ctaf-desc {
+  max-width: 42ch;
+  margin: var(--sp-3) 0 0;
+  font-size: var(--fs-small);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.ctaf-col-title {
+  margin: 0 0 var(--sp-3);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.ctaf-list > li + li { margin-top: var(--sp-2); }
+
+/* padding-block lifts the tap target and its neighbour gap clear of the
+   24px in SC 2.5.8 at --fs-small. */
+.ctaf-link {
+  display: inline-block;
+  padding-block: 2px;
+  font-size: var(--fs-small);
+  line-height: 1.45;
+  color: var(--body);
+  text-decoration: none;
+  overflow-wrap: break-word;
+  border-radius: var(--r-xs);
+}
+.ctaf-link:hover { color: var(--brand-deep); text-decoration: underline; }
+.ctaf-link-mail { color: var(--brand-deep); text-decoration: underline; }
+.ctaf-link-mail:hover { color: var(--brand); }
+
+.ctaf-bottom {
+  margin: var(--sp-8) 0 0;
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--hairline);
+  font-size: var(--fs-small);
+  color: var(--muted);
+}
+
+@media (min-width: 520px) { .ctaf-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 900px) {
+  .ctaf-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: var(--sp-8); }
+  .ctaf-nav { gap: var(--sp-5); }
+}
+
+/* The reveal primitive lives in the base layer; the guard is restated here
+   so the section honours reduced motion even in isolation. */
+@media (prefers-reduced-motion: reduce) {
+  .ctaf-cta .reveal,
+  .ctaf-footer .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ===== DOCPAGES ====================================================== */
+/* =========================================================================
+   LAYER: LEGAL DOCUMENTS — privacy.html, delete-account.html
+   Scoped to main.doc and its existing children (.doc-header, .updated,
+   .toc, .table-wrap, .callout). No markup change is required; every colour
+   comes from a foundation token. New names are prefixed doc- / --doc-.
+   ========================================================================= */
+
+/* --- Document shell ----------------------------------------------------- */
+/* Grid, not block flow, so the TOC can become a sticky rail at >=1100px.
+   Keep row-gap at 0 — the row-spanning sidebar would otherwise put a gap
+   between each of its empty implicit rows. Margins do not collapse inside a
+   grid, so each vertical gap below is the sum of the two margins meeting. */
+
+.doc {
+  --doc-measure: 41rem;   /* ~70ch of body copy at the base size */
+  --doc-shell: 46rem;     /* tables may run this wide */
+  --doc-rail: 16.5rem;    /* sticky TOC column */
+  --doc-rail-gap: 3.5rem;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  column-gap: var(--doc-rail-gap);
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: calc(var(--doc-shell) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  padding-block: clamp(2.5rem, 5vw, 4rem) clamp(4rem, 9vw, 7rem);
+  line-height: 1.7;
+  overflow-wrap: break-word;
+}
+
+.doc > * {
+  grid-column: 1;
+  min-width: 0;
+  max-width: var(--doc-measure);
+  margin-inline: auto;
+}
+
+.doc > .table-wrap { max-width: 100%; }
+
+/* --- Document header ---------------------------------------------------- */
+
+.doc .doc-header {
+  margin-bottom: clamp(2rem, 4vw, 2.75rem);
+  padding-bottom: clamp(1.5rem, 3vw, 2rem);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.doc .doc-header::before {
+  content: "";
+  display: block;
+  width: 2.75rem;
+  height: 4px;
+  margin-bottom: 1.25rem;
+  border-radius: var(--r-pill);
+  background-color: var(--brand-deep);
+  background-image: var(--brand-grad);
+}
+
+.doc .doc-header h1 {
+  margin: 0 0 1rem;
+  font-size: var(--fs-h1);
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+
+.doc .updated {
+  display: inline-block;
+  margin: 0;
+  padding: 0.3125rem 0.8125rem;
+  border: 1px solid var(--tint-line);
+  border-radius: var(--r-pill);
+  background-color: var(--tint-100);
+  color: var(--brand-deep);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  line-height: 1.35;
+}
+
+/* --- Prose -------------------------------------------------------------- */
+
+.doc p { margin: 0 0 1.1em; }
+
+.doc .doc-header + p {
+  font-size: var(--fs-lede);
+  line-height: 1.62;
+}
+
+.doc h2 {
+  margin: clamp(2.25rem, 4.5vw, 3.25rem) 0 0.85rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--hairline);
+  border-radius: var(--r-xs) var(--r-xs) 0 0;
+  font-size: clamp(1.25rem, 1.05rem + 0.7vw, 1.5rem);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.012em;
+  line-height: 1.28;
+}
+
+.doc h3 {
+  margin: 1.9rem 0 0.5rem;
+  color: var(--brand-deep);
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.008em;
+  line-height: 1.35;
+}
+
+/* The sticky header must be cleared whenever a heading is scrolled to, not
+   only while it matches :target — a fragment landing, a back/forward
+   restore, and a repeat click on an already-targeted link all scroll
+   without :target being newly applied first. */
+
+.doc h2,
+.doc h3 { scroll-margin-top: calc(var(--header-h) + 1.75rem); }
+
+.doc ul,
+.doc ol {
+  margin: 0 0 1.35em;
+  padding-left: 1.4rem;
+}
+
+.doc li { margin-bottom: 0.5rem; }
+.doc li:last-child { margin-bottom: 0; }
+.doc li::marker { color: var(--brand); }
+
+.doc strong {
+  color: var(--text-heading);
+  font-weight: var(--fw-semibold);
+}
+
+.doc a {
+  font-weight: var(--fw-medium);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.doc a:hover,
+.doc a:focus-visible { text-decoration-thickness: 2px; }
+
+/* --- Anchor target highlight -------------------------------------------- */
+/* A box-shadow spread bleeds the tint past the heading box without a negative
+   z-index (which can land behind an ancestor background) and without padding
+   (which would shift the heading sideways the moment it is targeted). */
+
+.doc h2:target,
+.doc h3:target {
+  border-bottom-color: var(--tint-line);
+  background-color: var(--tint-100);
+  box-shadow: 0 0 0 0.5rem var(--tint-100);
+  animation: doc-target-in 600ms var(--ease-out);
+}
+
+@keyframes doc-target-in {
+  from {
+    background-color: transparent;
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+/* --- Table of contents -------------------------------------------------- */
+
+.doc .toc {
+  margin: 2.25rem 0 2.75rem;
+  padding: 1.375rem 1.25rem 1.125rem;
+  border: 1px solid var(--tint-line);
+  border-radius: var(--r-md);
+  background-color: var(--tint-050);
+}
+
+.doc .toc > p {
+  margin: 0 0 0.75rem;
+  padding-inline: 0.5rem;
+  color: var(--brand);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-eyebrow);
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.doc .toc ol {
+  margin: 0;
+  padding: 0;
+  counter-reset: doc-toc;
+  font-size: var(--fs-small);
+  list-style: none;
+}
+
+.doc .toc li {
+  margin: 0;
+  counter-increment: doc-toc;
+}
+
+.doc .toc a {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.4375rem 0.5rem;
+  border-radius: var(--r-xs);
+  color: var(--text-body);
+  font-weight: var(--fw-medium);
+  line-height: 1.45;
+  text-decoration: none;
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.doc .toc a::before {
+  content: counter(doc-toc) ".";
+  flex: none;
+  min-width: 1.4em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.doc .toc a:hover {
+  background-color: var(--tint-100);
+  color: var(--brand-deep);
+}
+
+.doc .toc a:focus-visible {
+  outline: 3px solid var(--focus-color);
+  outline-offset: 2px;
+  background-color: var(--tint-100);
+  color: var(--brand-deep);
+}
+
+/* --muted on --tint-100 is 4.34:1 — under AA. Both states that paint the
+   deeper tint behind the counter must therefore recolour it; --brand on
+   --tint-100 is 5.91:1. */
+
+.doc .toc a:hover::before,
+.doc .toc a:focus-visible::before { color: var(--brand); }
+
+@media (min-width: 620px) {
+  .doc .toc ol {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1.25rem;
+  }
+}
+
+/* --- Sticky TOC rail ---------------------------------------------------- */
+/* :has() keeps this off delete-account.html, which has no .toc; where :has()
+   is unsupported the block is dropped and the TOC stays the two-column card
+   tablets get. The row-spanning grid item is what lets a flat document sit
+   beside a sticky sidebar with no wrapper element. The span must exceed the
+   document's direct-child count or the rail stops sticking partway down —
+   privacy.html is at 84, so 400 leaves real headroom. Spanned rows past the
+   last one are implicit and zero-height, so the surplus costs nothing. */
+
+@media (min-width: 1100px) {
+  .doc:has(> .toc) {
+    max-width: calc(64rem + var(--gutter) * 2);
+    grid-template-columns: minmax(0, 1fr) var(--doc-rail);
+  }
+
+  .doc:has(> .toc) > .toc {
+    position: sticky;
+    top: calc(var(--header-h) + 1.25rem);
+    grid-column: 2;
+    grid-row: 1 / span 400;
+    align-self: start;
+    max-width: none;
+    max-height: calc(100vh - var(--header-h) - 3.5rem);
+    margin: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .doc:has(> .toc) > .toc ol { display: block; }
+}
+
+/* --- Tables ------------------------------------------------------------- */
+
+.doc .table-wrap {
+  margin: 0 0 1.75rem;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--r-md);
+  background-color: var(--surface);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.doc .table-wrap:focus-visible {
+  outline: 3px solid var(--focus-color);
+  outline-offset: 3px;
+}
+
+/* border-collapse and width are stated here rather than left to a bare
+   `table` reset: without collapse the cell bottom borders double into a
+   visible 2px rule, `tbody tr:last-child td { border-bottom: 0 }` no longer
+   removes the last one, and the table stops filling the rounded wrapper. */
+
+.doc table {
+  width: 100%;
+  min-width: 32rem;
+  border-collapse: collapse;
+  font-size: var(--fs-small);
+  line-height: 1.55;
+}
+
+.doc th,
+.doc td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--hairline);
+  text-align: left;
+  vertical-align: top;
+}
+
+.doc thead th {
+  border-bottom-color: var(--tint-line);
+  background-color: var(--tint-050);
+  color: var(--brand-deep);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.doc tbody tr:nth-child(even) { background-color: var(--surface-alt); }
+.doc tbody tr:last-child td { border-bottom: 0; }
+.doc td:first-child { color: var(--text-heading); }
+
+/* --- Callout ------------------------------------------------------------ */
+
+.doc .callout {
+  position: relative;
+  margin: 2.5rem 0;
+  padding: 1.25rem 1.375rem 1.25rem 1.75rem;
+  border: 1px solid var(--tint-line);
+  border-radius: var(--r-md);
+  background-color: var(--tint-050);
+}
+
+/* No overflow:hidden on the callout — it would clip the focus ring of the
+   support mailto link this box exists to hold. The bar rounds its own left
+   corners instead; the radii scale down to the 4px width, which lands on the
+   same shape the clip produced. */
+
+.doc .callout::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  border-radius: var(--r-md) 0 0 var(--r-md);
+  background-color: var(--brand-deep);
+  background-image: var(--brand-grad);
+}
+
+.doc .callout p:last-child { margin-bottom: 0; }
+
+/* --- Reduced motion ----------------------------------------------------- */
+/* The foundation flattens durations; this states the target highlight
+   outright rather than relying on a 0.01ms animation landing on its end. */
+
+@media (prefers-reduced-motion: reduce) {
+  .doc h2:target,
+  .doc h3:target { animation: none; }
+}
+
+/* --- Print -------------------------------------------------------------- */
+
+@media print {
+  .doc {
+    display: block;
+    max-width: none;
+    padding: 0;
+    font-size: 11pt;
+  }
+
+  .doc > * { max-width: none; }
+
+  .doc .toc,
+  .doc .doc-header::before { display: none; }
+
+  .doc .updated {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+  }
+
+  .doc h2,
+  .doc h3 { break-after: avoid; }
+
+  .doc .table-wrap { overflow: visible; }
+  .doc table { min-width: 0; }
+  .doc tbody tr:nth-child(even) { background: none; }
+  .doc .callout { break-inside: avoid; }
+}
+
+/* ===== NOTFOUND ====================================================== */
+/* ==========================================================================
+   404 — "Page not found". Single-screen page on the hero gradient.
+   Scoped to .nf-* ; used only by 404.html.
+   ========================================================================== */
+
+.nf-body {
+  background-color: var(--tint-050);
+  background-image: var(--hero-grad);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* No overflow clip here: .nf-decor is the curves' containing block and
+   already clips them to this exact box. Clipping the shell as well only
+   cropped focus rings at the page edges. */
+.nf-shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding-block: var(--sp-5);
+}
+
+.nf-top,
+.nf-main,
+.nf-bottom { position: relative; z-index: 1; }
+
+/* Skip-link target: focusable so focus actually lands here, but never
+   ringed on click (:focus-visible still applies for keyboard users). */
+.nf-main:focus { outline: none; }
+
+/* --- Wordmark ----------------------------------------------------------- */
+/* Mirrors .hdr-brand so the 404 wordmark is the site wordmark. */
+
+.nf-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 44px;
+  color: var(--ink);
+  font-size: 1.0625rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  text-decoration: none;
+  transition: color var(--dur) var(--ease);
+}
+
+.nf-brand:hover { color: var(--brand-deep); }
+.nf-brand img { flex: none; border-radius: var(--r-xs); }
+
+/* --- Centred stack ------------------------------------------------------ */
+
+.nf-main {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  padding-block: var(--sp-7);
+}
+
+.nf-inner {
+  max-width: 44rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.nf-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  /* Trailing letter-spacing pads the right edge; subtracted back out so the
+     label is optically centred inside the bordered pill. */
+  padding: 0.4375rem calc(0.875rem - var(--ls-eyebrow)) 0.4375rem 0.875rem;
+  border: 1px solid var(--tint-line);
+  border-radius: var(--r-pill);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-soft);
+  color: var(--brand);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+}
+
+.nf-pill-dot {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background-color: var(--accent-coral);
+}
+
+.nf-title { margin-top: var(--sp-5); }
+
+/* Forces the reference two-tone break: ink line, then the accent line. */
+.nf-line { display: block; }
+
+/* --body, not --muted: the lede sits on a tinted gradient, where --muted
+   measures 4.40:1 against the darkest stop (#EEF1F9) and misses AA.
+   --body measures 6.80:1 there. */
+.nf-lede {
+  max-width: 34rem;
+  margin-top: var(--sp-4);
+  margin-inline: auto;
+  color: var(--body);
+  text-wrap: balance;
+}
+
+.nf-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-6);
+}
+
+/* Capped: without a measure this ran the full 44rem as one ~95-char line. */
+.nf-help {
+  max-width: 40rem;
+  margin-top: var(--sp-5);
+  margin-inline: auto;
+  color: var(--body);
+}
+
+.nf-bottom p { color: var(--body); }
+
+/* --- Decorative curves -------------------------------------------------- */
+
+.nf-decor {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.nf-curve {
+  position: absolute;
+  height: auto;
+}
+
+.nf-curve-a {
+  top: clamp(3rem, 11vh, 8rem);
+  left: -2.75rem;
+  width: clamp(7.5rem, 15vw, 13rem);
+  color: var(--brand-bright);
+  opacity: 0.55;
+}
+
+.nf-curve-b {
+  top: clamp(2rem, 7vh, 6rem);
+  right: -2.25rem;
+  width: clamp(8rem, 17vw, 14.5rem);
+  color: var(--accent-yellow);
+}
+
+.nf-curve-c {
+  bottom: clamp(1.5rem, 8vh, 7rem);
+  left: -2rem;
+  width: clamp(7rem, 13vw, 11.5rem);
+  color: var(--accent-teal);
+}
+
+.nf-curve-d {
+  right: -3rem;
+  bottom: clamp(0.5rem, 5vh, 4.5rem);
+  width: clamp(7.5rem, 14vw, 12rem);
+  color: var(--accent-coral);
+  opacity: 0.8;
+}
+
+/* --- Responsive --------------------------------------------------------- */
+
+@media (max-width: 47.9375rem) {
+  .nf-decor { display: none; }   /* no room beside the text below 768px */
+}
+
+@media (max-width: 30rem) {
+  .nf-main { padding-block: var(--sp-5); }
+  .nf-actions { flex-direction: column; align-items: stretch; }
+  .nf-actions .btn { width: 100%; }
+}
+
+@media (max-height: 36rem) {
+  .nf-main { padding-block: var(--sp-4); }
+  .nf-title { margin-top: var(--sp-4); }
+}
+
+@media print {
+  .nf-shell { min-height: 0; }
+  .nf-decor { display: none; }
+}
+
+
+/* ===== A11Y FIXES ==================================================== */
+/* =========================================================================
+   Appended last on purpose, and every selector here is deliberately one step
+   more specific than the rule it overrides, so the block still wins if the
+   layers are ever reassembled in a different order. Ratios in the comments
+   are measured against the real rendered page (sRGB relative luminance,
+   WCAG 2.x formula), not estimated.
+   ========================================================================= */
+
+/* --- 1. STICKY HEADER OVER THE DARK SECTION ---------------------------- */
+
+/* 1a. The no-JS floor. Without reveal.js neither .is-stuck nor .is-over-dark
+   is ever set, so the header stayed fully transparent and its --ink wordmark
+   travelled over the #101828 CTA section at 1.1:1 — invisible. An opaque
+   default costs nothing visually: at rest the header sits above the hero on
+   --page-bg #FFFFFF, so painting that same white is a no-op, and .is-stuck
+   replaces it the moment the page scrolls. */
+.site-header { background-color: var(--page-bg); }
+
+/* 1b. The over-dark state. /reveal.js sets .is-over-dark when the header's
+   own midline crosses a .theme-dark section, so the swap fires once per
+   boundary instead of flickering across it.
+   Worst case (lightest) backdrop inside that section is the CTA glow peak,
+   which composites to #361B68; 0.72 ink over that lands on #1B193A. Every
+   ratio below is measured against #1B193A, never the flat #101828. */
+header.site-header.is-over-dark {
+  --focus-color: #E4D2FF;   /* 12.0:1 on #1B193A — --brand-bright is 2.9:1 */
+  --focus-halo: var(--ink);
+  background-color: rgba(16, 24, 40, 0.94);   /* fallback path: near-opaque */
+  border-bottom-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 8px 24px -16px rgba(0, 0, 0, 0.8);
+}
+
+@supports ((backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px))) {
+  header.site-header.is-over-dark {
+    background-color: rgba(16, 24, 40, 0.72);
+    -webkit-backdrop-filter: saturate(140%) blur(12px);
+    backdrop-filter: saturate(140%) blur(12px);
+  }
+}
+
+/* Contents flip with the bar. Both paths land on essentially the same ink
+   ground (#1B193A blurred / #13182D opaque), so one set of colours covers
+   the backdrop-filter and the no-backdrop-filter header alike. */
+.site-header.is-over-dark .hdr-brand { color: #FFFFFF; }        /* 16.8:1 */
+.site-header.is-over-dark .hdr-brand:hover { color: #E4D2FF; }  /* 12.0:1 */
+.site-header.is-over-dark .hdr-link { color: #D0D5DD; }         /* 11.4:1 */
+
+.site-header.is-over-dark .hdr-link:hover {
+  color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* The Play pill's deep end (#5A10A4) is 1.6:1 against the dark bar, so the
+   button would lose its boundary entirely. Same 0.36 hairline the dark CTA
+   section already uses: 3.3:1, clearing SC 1.4.11. Border longhand, because
+   .btn ships `border: 1px solid transparent` and a lone border-color on a
+   zero-width border paints nothing. */
+.site-header.is-over-dark .hdr-cta { border: 1px solid rgba(255, 255, 255, 0.36); }
+
+/* The wordmark icon's soft dark shadow is invisible on ink; a hairline keeps
+   the 28px tile from bleeding into the bar. */
+.site-header.is-over-dark .hdr-logo { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22); }
+
+/* 1c. The two header focus rings were hard-coded to --brand (#7A1FE0):
+   2.5:1 on the dark bar, under the 3:1 SC 1.4.11 asks of a focus indicator.
+   Routed through --focus-color, which 1b re-points on dark — 5.98:1 over the
+   light hero, 12.0:1 over the dark bar. */
+.site-header .hdr-brand:focus-visible,
+.site-header .hdr-link:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
+}
+
+/* The skip link is position:fixed above the header (z-index 100), so once the
+   bar goes dark its --brand-bright ring dropped to 2.9:1. The halo is the
+   foundation's own two-part focus pattern: white on a white page (invisible,
+   no cost), 17.8:1 wherever it lands on the dark bar. */
+.skip-link:focus,
+.skip-link:focus-visible { box-shadow: 0 0 0 6px var(--focus-halo); }
+
+/* --- 2. HERO PRIMARY BUTTON KICKER ------------------------------------- */
+
+/* --tint-200 (#E7DBF8) measured 4.43:1 against #8B22F0 — the light end of
+   --brand-grad and the lightest pixel the label can ever sit on. The
+   replacement is still a tint rather than white, so the kicker stays
+   subordinate to the white .hero__store-name beside it, but it clears AA
+   with headroom at every point of both gradients:
+     #F4EDFF on #8B22F0 (rest, light end)   = 5.13:1
+     #F4EDFF on #5A10A4 (rest, deep end)    = 9.00:1
+     #F4EDFF on #7A18DE (hover, light end)  = 6.11:1
+     #F4EDFF on #4B0C8C (hover, deep end)   = 10.64:1 */
+:root { --tint-on-brand: #F4EDFF; }
+
+.btn.btn-primary .hero__store-kicker { color: var(--tint-on-brand); }
+
+/* --- 3. FOOTER COLUMN TITLES ------------------------------------------- */
+
+/* The markup moves from <h2 class="ctaf-col-title"> to <p class="…">, so
+   "App" / "Legal" / "Contact" leave the heading outline of every page while
+   each <ul aria-labelledby> keeps its accessible name. The class already
+   pinned font-size, weight, tracking, case and colour, so nothing moves;
+   these are the three properties a <p> would otherwise inherit differently
+   from a heading. */
+.ctaf-nav .ctaf-col-title {
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+/* ===== COLOUR ROTATION — per-section accent hues ===================== */
+/* ===== ACCENT ROTATION =============================================== */
+/* ==========================================================================
+   Per-section accent rotation. Appended last, so every rule here overrides an
+   earlier layer, and every rule is scoped to the section that owns the hue.
+
+   Purple stays the spine: hero, all four two-tone headlines, both primary
+   CTAs, the logo, every link. What rotates is the second tier — the section
+   eyebrows, the step numerals, the six feature tiles, and the chips, checks
+   and tags inside the translation mock.
+
+     hero          purple   unchanged
+     how it works  teal     eyebrow, 01/02/03, connectors, step rules
+     features      amber    eyebrow + gold bar; tiles cycle all four hues
+     translation   coral    eyebrow, checks, Translated tag + bubble, chip
+     closing CTA   purple   unchanged
+
+   Every accent that is TEXT clears 4.5:1 on its own ground, so each hue is
+   used through its AA-safe ink and never through its decorative sibling.
+   #F5BB00 measures 1.75:1 on white, so it appears only as a fill — the
+   features bar — with the amber ink beside it carrying the label.
+   ========================================================================== */
+
+:root {
+  /* AA-safe siblings, extending the --accent-*-ink pattern in the foundation
+     layer. Ratios are against #FFFFFF. */
+  --accent-teal-deep: #14495D;   /* 9.81:1 — deep end of the numeral ramp  */
+  --accent-coral-deep: #9A3412;  /* 7.31:1 — glyph on a coral tile         */
+  --accent-amber-ink: #8A5A00;   /* 5.93:1 — the text-safe gold            */
+
+  /* Icon tiles, rest and hover. Each hover step is deeper than its rest
+     value and still holds its glyph at 4.5:1 or better. */
+  --accent-teal-tile: #DCEDF3;   --accent-teal-tile-hi: #D2E7EE;
+  --accent-coral-tile: #FFE7DC;  --accent-coral-tile-hi: #FFDACB;
+  --accent-amber-tile: #FBEFC9;  --accent-amber-tile-hi: #F9E9B8;
+
+  /* Hairlines, matched to the weight of the existing --tint-line (1.31:1). */
+  --accent-teal-line: rgba(46, 108, 132, 0.22);   /* 1.36:1 */
+  --accent-coral-line: rgba(194, 65, 12, 0.22);   /* 1.39:1 */
+  --accent-amber-line: rgba(138, 90, 0, 0.24);    /* 1.42:1 */
+}
+
+/* --- Section flag: bar in the pure hue, label in the safe ink ----------- */
+/* The bar is what lets #F5BB00 onto the page at a size where it reads. It is
+   decoration — the eyebrow text beside it carries the label — so 1.75:1 is
+   not a 1.4.11 failure. Scoped to the three landing sections, so the legal
+   pages and 404 keep the plain eyebrow. */
+
+.hiw .eyebrow,
+.features .eyebrow,
+.tx .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.hiw .eyebrow::before,
+.features .eyebrow::before,
+.tx .eyebrow::before {
+  content: "";
+  flex: none;
+  width: 1.75rem;
+  height: 0.25rem;
+  border-radius: var(--r-pill);
+  background-color: var(--eyebrow-bar, currentColor);
+}
+
+/* --- 2. HOW IT WORKS — teal --------------------------------------------- */
+
+.hiw { --eyebrow-bar: var(--accent-teal); }          /* #67A2B9 fill        */
+
+.hiw .eyebrow { color: var(--accent-teal-ink); }     /* 5.84:1 on #FFFFFF   */
+
+/* The numerals are the loudest thing in the section, so they take the hue in
+   full — the same two-stop ramp the purple version used, in teal.
+   #2E6C84 5.84:1 -> #14495D 9.81:1 on white; solid fallback 5.84:1. */
+.hiw .hiw__num { color: var(--accent-teal-ink); }
+
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .hiw .hiw__num {
+    background-image: linear-gradient(160deg, var(--accent-teal-ink), var(--accent-teal-deep));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* Restated after the override above, which outranks the original guard and
+   would otherwise leave the numerals painting transparent in forced colors. */
+@media (forced-colors: active) {
+  .hiw .hiw__num {
+    background-image: none;
+    color: CanvasText;
+  }
+}
+
+/* Connectors and step rules — decoration, lifted from purple at 0.16 alpha
+   (1.31:1) to teal at 1.76:1 and 1.44:1. */
+.hiw .hiw__link { color: rgba(46, 108, 132, 0.38); }
+.hiw .hiw__step { border-top-color: rgba(46, 108, 132, 0.26); }
+
+/* --- 3. FEATURES — amber flag, four-hue tile sequence ------------------- */
+
+.features { --eyebrow-bar: var(--accent-yellow); }     /* #F5BB00 fill only */
+
+.features .eyebrow { color: var(--accent-amber-ink); } /* 5.59:1 on #FAF7FF */
+
+/* Per-card hue, carried on custom properties so the icon and its hover state
+   keep their original selectors and specificity. Purple is the default, and
+   --brand is those same values under an explicit name, so the six-card
+   sequence reads in the markup instead of living in nth-child rules. */
+.features-item,
+.features-item--brand {
+  --fx-tile: var(--tint-100);
+  --fx-tile-hi: var(--tint-200);
+  --fx-line: var(--tint-line);
+  --fx-line-hi: var(--brand-bright);
+  --fx-ink: var(--brand-deep);
+}
+
+.features-item--teal {
+  --fx-tile: var(--accent-teal-tile);
+  --fx-tile-hi: var(--accent-teal-tile-hi);
+  --fx-line: var(--accent-teal-line);
+  --fx-line-hi: var(--accent-teal-ink);
+  --fx-ink: var(--accent-teal-ink);
+}
+
+.features-item--amber {
+  --fx-tile: var(--accent-amber-tile);
+  --fx-tile-hi: var(--accent-amber-tile-hi);
+  --fx-line: var(--accent-amber-line);
+  --fx-line-hi: var(--accent-amber-ink);
+  --fx-ink: var(--accent-amber-ink);
+}
+
+.features-item--coral {
+  --fx-tile: var(--accent-coral-tile);
+  --fx-tile-hi: var(--accent-coral-tile-hi);
+  --fx-line: var(--accent-coral-line);
+  --fx-line-hi: var(--accent-coral-ink);
+  --fx-ink: var(--accent-coral-deep);
+}
+
+.features-icon {
+  background-color: var(--fx-tile);
+  border-color: var(--fx-line);
+  color: var(--fx-ink);
+}
+
+/* Same specificity as the original hover pair and appended after it, so the
+   lift still fires — now in each card's own hue. */
+@media (hover: hover) and (pointer: fine) {
+  .features-card:hover { border-color: var(--fx-line); }
+
+  .features-card:hover .features-icon {
+    background-color: var(--fx-tile-hi);
+    border-color: var(--fx-line-hi);
+  }
+}
+
+/* --- 4. TRANSLATION — coral --------------------------------------------- */
+
+.tx { --eyebrow-bar: var(--accent-coral); }          /* #FF7A45 fill        */
+
+.tx .eyebrow { color: var(--accent-coral-ink); }     /* 5.18:1 on #FFFFFF   */
+
+.tx .tx__check circle { fill: var(--accent-coral-tile); }
+.tx .tx__check path { stroke: var(--accent-coral-deep); }   /* 6.16:1 on it */
+
+/* The translated bubble is the one moment the feature is actually happening,
+   so it is the one bubble that changes hue — and it now reads as a different
+   thing from the purple "you" bubble under it instead of echoing it. */
+.tx .tx__b--trans {
+  border-color: rgba(194, 65, 12, 0.28);
+  background-color: #FFF4EE;
+}
+
+.tx .tx__tag { color: var(--accent-coral-ink); }     /* 4.79:1 on #FFF4EE   */
+
+.tx .tx__tap {
+  border-color: rgba(194, 65, 12, 0.28);
+  color: var(--accent-coral-ink);                    /* 5.18:1 on #FFFFFF   */
+}
+
+.tx .tx__tap::after { border-color: rgba(194, 65, 12, 0.28); }
+
+/* Deliberately not rotated: .tx__avatar and .tx__b--me keep the brand
+   gradient — that pair is the product, and the product is purple — and
+   .tx__more stays a purple link like every other link on the site. */
+
+/* ===== A11Y FIXES — header over dark, contrast, focus ================ */
+/* ===== A11Y FIXES ==================================================== */
+/* =========================================================================
+   Appended last on purpose, and every selector here is deliberately one step
+   more specific than the rule it overrides, so the block still wins if the
+   layers are ever reassembled in a different order. Ratios in the comments
+   are measured against the real rendered page (sRGB relative luminance,
+   WCAG 2.x formula), not estimated.
+   ========================================================================= */
+
+/* --- 1. STICKY HEADER OVER THE DARK SECTION ---------------------------- */
+
+/* 1a. The no-JS floor. Without reveal.js neither .is-stuck nor .is-over-dark
+   is ever set, so the header stayed fully transparent and its --ink wordmark
+   travelled over the #101828 CTA section at 1.1:1 — invisible. An opaque
+   default costs nothing visually: at rest the header sits above the hero on
+   --page-bg #FFFFFF, so painting that same white is a no-op, and .is-stuck
+   replaces it the moment the page scrolls. */
+.site-header { background-color: var(--page-bg); }
+
+/* 1b. The over-dark state. /reveal.js sets .is-over-dark when the header's
+   own midline crosses a .theme-dark section, so the swap fires once per
+   boundary instead of flickering across it.
+   Worst case (lightest) backdrop inside that section is the CTA glow peak,
+   which composites to #361B68; 0.72 ink over that lands on #1B193A. Every
+   ratio below is measured against #1B193A, never the flat #101828. */
+header.site-header.is-over-dark {
+  --focus-color: #E4D2FF;   /* 12.0:1 on #1B193A — --brand-bright is 2.9:1 */
+  --focus-halo: var(--ink);
+  background-color: rgba(16, 24, 40, 0.94);   /* fallback path: near-opaque */
+  border-bottom-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 8px 24px -16px rgba(0, 0, 0, 0.8);
+}
+
+@supports ((backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px))) {
+  header.site-header.is-over-dark {
+    background-color: rgba(16, 24, 40, 0.72);
+    -webkit-backdrop-filter: saturate(140%) blur(12px);
+    backdrop-filter: saturate(140%) blur(12px);
+  }
+}
+
+/* Contents flip with the bar. Both paths land on essentially the same ink
+   ground (#1B193A blurred / #13182D opaque), so one set of colours covers
+   the backdrop-filter and the no-backdrop-filter header alike. */
+.site-header.is-over-dark .hdr-brand { color: #FFFFFF; }        /* 16.8:1 */
+.site-header.is-over-dark .hdr-brand:hover { color: #E4D2FF; }  /* 12.0:1 */
+.site-header.is-over-dark .hdr-link { color: #D0D5DD; }         /* 11.4:1 */
+
+.site-header.is-over-dark .hdr-link:hover {
+  color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* The Play pill's deep end (#5A10A4) is 1.6:1 against the dark bar, so the
+   button would lose its boundary entirely. Same 0.36 hairline the dark CTA
+   section already uses: 3.3:1, clearing SC 1.4.11. Border longhand, because
+   .btn ships `border: 1px solid transparent` and a lone border-color on a
+   zero-width border paints nothing. */
+.site-header.is-over-dark .hdr-cta { border: 1px solid rgba(255, 255, 255, 0.36); }
+
+/* The wordmark icon's soft dark shadow is invisible on ink; a hairline keeps
+   the 28px tile from bleeding into the bar. */
+.site-header.is-over-dark .hdr-logo { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22); }
+
+/* 1c. The two header focus rings were hard-coded to --brand (#7A1FE0):
+   2.5:1 on the dark bar, under the 3:1 SC 1.4.11 asks of a focus indicator.
+   Routed through --focus-color, which 1b re-points on dark — 5.98:1 over the
+   light hero, 12.0:1 over the dark bar. */
+.site-header .hdr-brand:focus-visible,
+.site-header .hdr-link:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
+}
+
+/* The skip link is position:fixed above the header (z-index 100), so once the
+   bar goes dark its --brand-bright ring dropped to 2.9:1. The halo is the
+   foundation's own two-part focus pattern: white on a white page (invisible,
+   no cost), 17.8:1 wherever it lands on the dark bar. */
+.skip-link:focus,
+.skip-link:focus-visible { box-shadow: 0 0 0 6px var(--focus-halo); }
+
+/* --- 2. HERO PRIMARY BUTTON KICKER ------------------------------------- */
+
+/* --tint-200 (#E7DBF8) measured 4.43:1 against #8B22F0 — the light end of
+   --brand-grad and the lightest pixel the label can ever sit on. The
+   replacement is still a tint rather than white, so the kicker stays
+   subordinate to the white .hero__store-name beside it, but it clears AA
+   with headroom at every point of both gradients:
+     #F4EDFF on #8B22F0 (rest, light end)   = 5.13:1
+     #F4EDFF on #5A10A4 (rest, deep end)    = 9.00:1
+     #F4EDFF on #7A18DE (hover, light end)  = 6.11:1
+     #F4EDFF on #4B0C8C (hover, deep end)   = 10.64:1 */
+:root { --tint-on-brand: #F4EDFF; }
+
+.btn.btn-primary .hero__store-kicker { color: var(--tint-on-brand); }
+
+/* --- 3. FOOTER COLUMN TITLES ------------------------------------------- */
+
+/* The markup moves from <h2 class="ctaf-col-title"> to <p class="…">, so
+   "App" / "Legal" / "Contact" leave the heading outline of every page while
+   each <ul aria-labelledby> keeps its accessible name. The class already
+   pinned font-size, weight, tracking, case and colour, so nothing moves;
+   these are the three properties a <p> would otherwise inherit differently
+   from a heading. */
+.ctaf-nav .ctaf-col-title {
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+/* ===== DOC TABLES — small-screen treatment =========================== */
+/* ===== DOCTABLES ===================================================== */
+/* =========================================================================
+   LAYER: LEGAL DOCUMENT TABLES + PAGE SHELL — privacy.html, delete-account.html
+   Sits after DOCPAGES and overrides three of its rules. Nothing here applies
+   to any page that does not have a <main class="doc">.
+   ========================================================================= */
+
+/* --- Page shell --------------------------------------------------------- */
+/* DOCPAGES gives .doc `flex: 1 1 auto`, which does nothing until the body is
+   the flex column it was written for. With it, a short document
+   (delete-account.html) still pushes the footer to the bottom of the viewport
+   instead of leaving it floating mid-screen. :has() is already a dependency of
+   the DOCPAGES sticky-TOC rail; where it is unsupported the page simply flows
+   as a block, which is what it does today. The sticky header is unaffected —
+   a flex item can still be position: sticky. */
+
+body:has(> main.doc) {
   display: flex;
   flex-direction: column;
 }
 
-/* Header */
+/* The document ends on white and .ctaf-footer starts on white, so on a legal
+   page (no dark CTA section in between, as there is on the landing page) the
+   two run together. One hairline, the same rule the document's own h2s use. */
 
-.site-header {
-  border-bottom: 1px solid var(--border);
-  background: var(--bg);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
+.doc + .ctaf-footer { border-top: 1px solid var(--hairline); }
 
-.site-header .inner,
-footer .inner,
-main {
-  max-width: var(--container);
-  width: 100%;
-  margin: 0 auto;
-}
+/* --- Small-screen tables: one card per row ------------------------------ */
+/* DEFECT FIX. DOCPAGES pairs `.table-wrap { overflow-x: auto }` with
+   `table { min-width: 32rem }`, which forced all three data tables into a
+   sideways scroll on every phone — with no visible cue that anything was off
+   to the right, and with the row's first cell scrolling out of sight, so a
+   reader who did scroll lost the label for the value they were reading. It
+   also fails WCAG 2.1 SC 1.4.10 Reflow: at 400% zoom the viewport is ~320 CSS
+   px, well inside the same trap.
 
-.site-header .inner {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 0 24px;
-  height: 60px;
-}
+   Below 38em each row becomes a labelled card, so nothing scrolls sideways
+   and no column is dropped. 38em is the width at which the scroll stops being
+   needed at all, plus headroom: a 608px viewport, less a 17px classic
+   scrollbar and its two 4vw gutters, leaves 542px for a 512px (32rem) table.
+   The obvious breakpoint, 36em, clears that same table by only 1px once a
+   desktop scrollbar is in play, which is how the band just above a breakpoint
+   ends up scrolling anyway. Both sides are in em/rem, so they still line up if
+   the reader raises their default font size.
 
-.mark {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-  color: var(--fg);
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: -0.2px;
-}
+   The redundant role="" attributes in the markup are what make this safe:
+   `display: block` on a <tr> or a <td> drops the row and cell out of the
+   accessibility tree, and the explicit roles put them back. */
 
-.mark img { width: 26px; height: 26px; display: block; }
+@media (max-width: 37.99em) {
 
-.site-header nav {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  font-size: 14.5px;
-}
+  /* The wrapper's border and rounding move onto the individual cards. */
+  .doc .table-wrap {
+    border: 0;
+    border-radius: 0;
+    background: none;
+    overflow-x: visible;
+  }
 
-.site-header nav a {
-  color: var(--muted);
-  text-decoration: none;
-  padding: 4px 0;
-  border-bottom: 2px solid transparent;
-  transition: color 0.15s ease, border-color 0.15s ease;
-}
+  .doc .table-wrap table,
+  .doc .table-wrap thead,
+  .doc .table-wrap tbody,
+  .doc .table-wrap tr,
+  .doc .table-wrap th,
+  .doc .table-wrap td { display: block; }
 
-.site-header nav a:hover { color: var(--fg); }
+  .doc .table-wrap table {
+    width: 100%;
+    min-width: 0;
+  }
 
-.site-header nav a[aria-current="page"] {
-  color: var(--fg);
-  border-bottom-color: var(--accent);
-}
+  /* Every column name is now repeated inside its own cell, so the header row
+     would only say it twice. display: none takes it out of the accessibility
+     tree as well, which is the point: with the label sitting in the cell there
+     is nothing left for a header cell to be associated with, and a screen
+     reader announces each cell once, as "Provider: Supabase". */
+  .doc .table-wrap thead { display: none; }
 
-/* Main */
+  /* Card. The tinted first cell, not the hairline, is what separates one row
+     from the next — a filled block plus the gap reads as a boundary without
+     depending on border contrast. */
+  .doc .table-wrap tbody tr {
+    margin-bottom: 0.875rem;
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--r-md);
+    background-color: var(--surface);
+    overflow: hidden;
+  }
 
-main {
-  flex: 1;
-  padding: 64px 24px 96px;
-}
+  .doc .table-wrap tbody tr:last-child { margin-bottom: 0; }
 
-.eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  font-size: 11.5px;
-  font-weight: 700;
-  color: var(--faint);
-  margin: 0 0 12px;
-}
+  .doc .table-wrap tbody tr td {
+    padding: 0.6875rem 1rem 0.8125rem;
+    border-bottom: 1px solid var(--hairline);
+  }
 
-h1 {
-  font-size: 33px;
-  line-height: 1.25;
-  letter-spacing: -0.5px;
-  font-weight: 600;
-  margin: 0 0 12px;
-}
+  .doc .table-wrap tbody tr td:last-child { border-bottom: 0; }
 
-.lede {
-  font-size: 17.5px;
-  color: var(--muted);
-  margin: 0;
-  max-width: 40em;
-}
+  .doc .table-wrap tbody tr td:first-child {
+    border-bottom-color: var(--tint-line);
+    background-color: var(--tint-050);
+    font-weight: var(--fw-semibold);
+  }
 
-.hub .lede { margin-bottom: 48px; }
+  /* The column name, in the eyebrow treatment the rest of the layer uses.
+     text-transform rather than literal capitals, so screen readers read the
+     word instead of spelling it out. */
+  .doc .table-wrap tbody tr td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 0.1875rem;
+    color: var(--brand-deep);
+    font-size: var(--fs-eyebrow);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-eyebrow);
+    line-height: 1.25;
+    text-transform: uppercase;
+  }
 
-/* Document cards */
-
-.cards {
-  display: grid;
-  gap: 12px;
-  margin-bottom: 48px;
-}
-
-.card {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  text-decoration: none;
-  color: var(--fg);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px 22px;
-  cursor: pointer;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
-}
-
-.card:hover {
-  border-color: var(--border-strong);
-  background: var(--bg-soft);
-}
-
-.card-title {
-  display: block;
-  font-size: 16.5px;
-  font-weight: 600;
-  letter-spacing: -0.1px;
-  margin-bottom: 3px;
-}
-
-.card-desc {
-  display: block;
-  font-size: 14.5px;
-  line-height: 1.55;
-  color: var(--muted);
-}
-
-.card-meta {
-  display: block;
-  font-size: 12.5px;
-  color: var(--faint);
-  margin-top: 7px;
-}
-
-.card svg {
-  margin-left: auto;
-  flex-shrink: 0;
-  color: var(--faint);
-  transition: color 0.15s ease, transform 0.15s ease;
-}
-
-.card:hover svg {
-  color: var(--fg);
-  transform: translateX(2px);
-}
-
-/* Contact panel */
-
-.panel {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--bg-soft);
-  padding: 24px 26px;
-}
-
-.panel h2 {
-  font-size: 16.5px;
-  font-weight: 600;
-  margin: 0 0 6px;
-}
-
-.panel p {
-  margin: 0;
-  font-size: 15px;
-  color: var(--muted);
-}
-
-.panel p + p { margin-top: 10px; }
-
-/* Documents */
-
-.doc-header { margin-bottom: 40px; }
-
-.updated {
-  color: var(--faint);
-  font-size: 14px;
-  margin: 0;
-}
-
-.doc h2 {
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: -0.2px;
-  margin: 48px 0 14px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border);
-}
-
-.doc h3 {
-  font-size: 16.5px;
-  font-weight: 600;
-  margin: 30px 0 8px;
-}
-
-.doc p { margin: 0 0 14px; }
-.doc ul, .doc ol { padding-left: 24px; margin: 0 0 18px; }
-.doc li { margin-bottom: 9px; }
-.doc strong { font-weight: 600; }
-
-.toc {
-  background: var(--bg-soft);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 22px 26px;
-}
-
-.toc p {
-  margin: 0 0 14px;
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  color: var(--faint);
-}
-
-.toc ol {
-  margin: 0;
-  padding-left: 20px;
-  columns: 2;
-  column-gap: 36px;
-  font-size: 14.5px;
-  line-height: 1.5;
-  color: var(--faint);
-}
-
-.toc li { margin-bottom: 9px; break-inside: avoid; }
-.toc a { color: var(--muted); text-decoration: none; }
-.toc a:hover { color: var(--accent-ink); text-decoration: underline; }
-
-.table-wrap {
-  overflow-x: auto;
-  margin: 0 0 20px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-  min-width: 520px;
-  font-size: 14.5px;
-  line-height: 1.55;
-}
-
-th, td {
-  text-align: left;
-  vertical-align: top;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-}
-
-th {
-  font-weight: 600;
-  background: var(--bg-soft);
-  white-space: nowrap;
-}
-
-tr:last-child td { border-bottom: 0; }
-
-.callout {
-  background: var(--bg-soft);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px 24px;
-  margin: 32px 0;
-  font-size: 15.5px;
-}
-
-.callout p:last-child { margin-bottom: 0; }
-
-/* Footer */
-
-footer {
-  border-top: 1px solid var(--border);
-  padding: 28px 24px 40px;
-  color: var(--faint);
-  font-size: 13.5px;
-}
-
-footer .inner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px 24px;
-}
-
-footer p { margin: 0; }
-footer nav { margin-left: auto; display: flex; gap: 22px; }
-footer a { color: var(--muted); text-decoration: none; }
-footer a:hover { color: var(--accent-ink); }
-
-@media (max-width: 640px) {
-  body { font-size: 16px; }
-  main { padding: 40px 20px 64px; }
-  h1 { font-size: 27px; }
-  .lede { font-size: 16.5px; }
-  .hub .lede { margin-bottom: 36px; }
-  .site-header .inner { padding: 0 16px; }
-  .site-header nav { gap: 16px; font-size: 14px; }
-  .toc ol { columns: 1; }
-  footer nav { margin-left: 0; width: 100%; flex-wrap: wrap; }
-}
-
-@media (max-width: 380px) {
-  .mark span { display: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  * { transition-duration: 0.01ms !important; }
+  /* A cell with no data-label (a future table that forgets one) must not
+     render an empty label strip. */
+  .doc .table-wrap tbody tr td:not([data-label])::before { display: none; }
 }
 
 @media print {
-  .site-header, .toc, footer nav { display: none; }
-  body { font-size: 11pt; color: #000; }
-  .doc h2 { break-after: avoid; }
+  .doc + .ctaf-footer { border-top: 0; }
 }
+
+/* ===== DOC STEPS — account deletion procedure ======================== */
+/* --- Key steps card ------------------------------------------------------ */
+/* delete-account.html only. The in-app deletion sequence is what most people
+   arrive for, so it is lifted clear of the prose: the full document shell
+   rather than the reading measure, raised off the page on the page's own
+   white, headed by a brand rule. It has to outrank .callout, which stays flat
+   tint with a left bar.
+   That rule is painted as a background layer, not a pseudo-element: a 5px-tall
+   absolutely positioned bar cannot render the card's 20px corner radius and
+   leaves a white wedge at each end, whereas a background is clipped by the
+   border box and follows the curve exactly. It also keeps the card free of
+   overflow: hidden, so nothing here can clip a focus ring. */
+
+.doc > .doc-steps { max-width: 100%; }
+
+.doc .doc-steps {
+  margin: 1.25rem 0 2.25rem;
+  padding: clamp(1.375rem, 4vw, 2rem);
+  border: 1px solid var(--tint-line);
+  border-radius: var(--r-lg);
+  background-color: var(--surface);
+  background-image: var(--brand-grad);
+  background-repeat: no-repeat;
+  background-size: 100% 5px;
+  box-shadow: var(--shadow-card);
+}
+
+.doc .doc-steps__lead {
+  margin: 0 0 1.375rem;
+  color: var(--text-heading);
+  font-size: var(--fs-lede);
+  font-weight: var(--fw-semibold);
+  line-height: 1.5;
+}
+
+/* A counter, not a list marker: the number is a painted badge, and .doc
+   li::marker would otherwise still colour a bullet that must not appear.
+   The badge is absolutely positioned rather than made a flex item — these
+   steps carry inline <strong>, and display: flex on the li blows each phrase
+   apart into separate flex items ("Go to | Settings | ."). */
+
+.doc .doc-steps__list {
+  margin: 0;
+  padding: 0;
+  counter-reset: doc-step;
+  list-style: none;
+}
+
+.doc .doc-steps__list > li {
+  position: relative;
+  margin: 0;
+  padding: 0 0 1.25rem 2.875rem;   /* 2rem badge + 0.875rem gutter */
+  counter-increment: doc-step;
+  color: var(--text-heading);
+  font-size: var(--fs-lede);
+  font-weight: var(--fw-medium);
+  line-height: 1.55;
+}
+
+.doc .doc-steps__list > li:last-child { padding-bottom: 0; }
+
+.doc .doc-steps__list > li::before {
+  content: counter(doc-step);
+  position: absolute;
+  top: -0.125rem;                  /* optically centres the badge on line one */
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--r-pill);
+  background-color: var(--brand-deep);
+  background-image: var(--brand-grad);
+  box-shadow: 0 2px 6px rgba(88, 16, 160, 0.30);
+  color: #FFFFFF;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+/* The connector spans exactly the padding gap a step leaves above the next
+   badge, so it never has to know how tall either row grew once its text
+   wrapped — which it does at 360px. */
+
+.doc .doc-steps__list > li::after {
+  content: "";
+  position: absolute;
+  top: 2.125rem;
+  bottom: 0.125rem;
+  left: calc(1rem - 1px);
+  width: 2px;
+  border-radius: 1px;
+  background-color: var(--tint-200);
+}
+
+.doc .doc-steps__list > li:last-child::after { content: none; }
+
+.doc .doc-steps__note {
+  display: flex;
+  gap: 0.625rem;
+  align-items: flex-start;
+  margin: 1.5rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--hairline);
+  color: var(--text-body);
+  font-size: var(--fs-small);
+  line-height: 1.6;
+}
+
+.doc .doc-steps__note-icon {
+  flex: none;
+  margin-top: 0.125rem;
+  color: var(--brand);
+}
+
+@media print {
+  .doc .doc-steps {
+    background-image: none;
+    box-shadow: none;
+    break-inside: avoid;
+  }
+
+  .doc .doc-steps__list > li::before {
+    border: 1px solid var(--ink);
+    background: none;
+    box-shadow: none;
+    color: var(--ink);
+  }
+
+  .doc .doc-steps__list > li::after { content: none; }
+}
+
+/* ===== INTEGRATION FIXES ============================================== */
+
+/* The floating voice-message card collided with the third side card across
+   the 960-1199px band, where the grid gutter is narrower than its offset. */
+@media (min-width: 960px) and (max-width: 1199px) {
+  .heromock__float { right: auto; left: 50%; transform: translateX(-50%) translateY(35%); }
+}
+
+/* Legal-document headers were centred while their body copy was flush left. */
+.doc > .doc-header { margin-inline: 0; }
+
+/* The foundation reset strips list markers from any ol[class]; the deletion
+   procedure needs its numbers back. */
+.doc ol.doc-steps__list { list-style: decimal; padding-left: 1.25em; }
+
+/* Header overflowed horizontally once the user's base font exceeded 16px. */
+.hdr-inner { flex-wrap: wrap; row-gap: var(--sp-2); }
+.hdr-links { flex-wrap: wrap; }
+
+/* Skip-link target must be programmatically focusable without a focus ring
+   drawn around the whole page. */
+#main:focus { outline: none; }
