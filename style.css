@@ -758,25 +758,7 @@ DECISIONS
   background-color: var(--tint-100);
 }
 
-.hdr-cta {
-  position: relative;
-  font-size: var(--fs-small);
-}
-
 .hdr-cta .icon { flex: none; }
-
-/* The button reads "Google Play" until the row is wide enough to carry the
-   full wording alongside the nav links. "Get it on" stays in the accessible
-   name at every width, so the visible label is always contained in it. */
-
-.hdr-cta-lead {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  white-space: nowrap;
-  clip-path: inset(50%);
-}
 
 @media (min-width: 640px) {
   .hdr-links { display: flex; }
@@ -786,14 +768,6 @@ DECISIONS
 @media (min-width: 768px) {
   .hdr-link { padding-inline: 0.75rem; }
   .hdr-links { gap: var(--sp-2); }
-
-  .hdr-cta-lead {
-    position: static;
-    width: auto;
-    height: auto;
-    overflow: visible;
-    clip-path: none;
-  }
 }
 
 @media print {
@@ -889,43 +863,13 @@ DECISIONS
   margin-bottom: clamp(2.5rem, 5vw, 4rem);
 }
 
-.hero__store {
-  gap: var(--sp-3);
-  min-height: 62px;
-  padding: 0.5rem 1.5rem;
-}
-
 /* Paint mode is declared here, not inherited from whatever .icon decides. */
 .hero__icon { flex: none; }
-.hero__icon--solid { fill: currentColor; stroke: none; }
 .hero__icon--line { fill: none; stroke: currentColor; }
-
-.hero__store-text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1px;
-  min-width: 0;
-}
-
-.hero__store-kicker {
-  font-size: 0.6875rem;
-  font-weight: var(--fw-bold);
-  line-height: 1.2;
-  letter-spacing: var(--ls-eyebrow);
-  text-transform: uppercase;
-}
 
 .btn-primary .hero__store-kicker { color: var(--tint-200); } /* 5.1:1 on the gradient */
 .btn-ghost .hero__store-kicker { color: var(--brand); }      /* 6.7:1 on --surface */
 .btn-ghost:hover .hero__store-kicker { color: var(--brand-deep); }
-
-.hero__store-name {
-  font-size: var(--fs-body);
-  font-weight: var(--fw-bold);
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-}
 
 /* Hero product mock — a built-in illustration of the app, never a screenshot.
    Everything is markup; the only image is the 22px app icon in the phone's app
@@ -1499,7 +1443,6 @@ DECISIONS
   .hero__curve { opacity: 0.45; stroke-width: 8; }
   .hero__curve--tl { top: 0.75rem; left: -2.5rem; }
   .hero__curve--tr { top: 0.5rem; right: -3rem; }
-  .hero__store { width: 100%; }
 }
 
 /* Safety net in case the shared .reveal primitive is not itself guarded. */
@@ -2813,19 +2756,6 @@ header.site-header.is-over-dark {
 .skip-link:focus,
 .skip-link:focus-visible { box-shadow: 0 0 0 6px var(--focus-halo); }
 
-/* --- 2. HERO PRIMARY BUTTON KICKER ------------------------------------- */
-
-/* --tint-200 (#E7DBF8) measured 4.43:1 against #8B22F0 — the light end of
-   --brand-grad and the lightest pixel the label can ever sit on. The
-   replacement is still a tint rather than white, so the kicker stays
-   subordinate to the white .hero__store-name beside it, but it clears AA
-   with headroom at every point of both gradients:
-     #F4EDFF on #8B22F0 (rest, light end)   = 5.13:1
-     #F4EDFF on #5A10A4 (rest, deep end)    = 9.00:1
-     #F4EDFF on #7A18DE (hover, light end)  = 6.11:1
-     #F4EDFF on #4B0C8C (hover, deep end)   = 10.64:1 */
-:root { --tint-on-brand: #F4EDFF; }
-
 .btn.btn-primary .hero__store-kicker { color: var(--tint-on-brand); }
 
 /* --- 3. FOOTER COLUMN TITLES ------------------------------------------- */
@@ -3114,19 +3044,6 @@ header.site-header.is-over-dark {
    no cost), 17.8:1 wherever it lands on the dark bar. */
 .skip-link:focus,
 .skip-link:focus-visible { box-shadow: 0 0 0 6px var(--focus-halo); }
-
-/* --- 2. HERO PRIMARY BUTTON KICKER ------------------------------------- */
-
-/* --tint-200 (#E7DBF8) measured 4.43:1 against #8B22F0 — the light end of
-   --brand-grad and the lightest pixel the label can ever sit on. The
-   replacement is still a tint rather than white, so the kicker stays
-   subordinate to the white .hero__store-name beside it, but it clears AA
-   with headroom at every point of both gradients:
-     #F4EDFF on #8B22F0 (rest, light end)   = 5.13:1
-     #F4EDFF on #5A10A4 (rest, deep end)    = 9.00:1
-     #F4EDFF on #7A18DE (hover, light end)  = 6.11:1
-     #F4EDFF on #4B0C8C (hover, deep end)   = 10.64:1 */
-:root { --tint-on-brand: #F4EDFF; }
 
 .btn.btn-primary .hero__store-kicker { color: var(--tint-on-brand); }
 
@@ -3428,3 +3345,53 @@ body:has(> main.doc) {
 /* Skip-link target must be programmatically focusable without a focus ring
    drawn around the whole page. */
 #main:focus { outline: none; }
+
+/* ===== GOOGLE PLAY BADGE ============================================== */
+/* Google's official badge, used unmodified per their brand guidelines:
+   no recolouring, no monochrome variant, no cropping or filters. Only
+   size, a focus ring and a hover lift are applied — none of which alter
+   the artwork itself. */
+
+.pbadge {
+  display: inline-block;
+  line-height: 0;
+  transition: transform var(--dur) var(--ease);
+}
+
+.pbadge img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.pbadge:hover { transform: translateY(-2px); }
+
+.pbadge:focus-visible {
+  outline: 3px solid var(--focus-color);
+  outline-offset: 4px;
+  border-radius: var(--r-sm);
+}
+
+.pbadge--sm { width: 132px; }
+.pbadge--lg { width: 190px; }
+
+/* The badge carries its own clear space, so the header needs less padding
+   around it than the pill button it replaced. */
+.hdr-badge { margin-left: var(--sp-2); }
+
+/* The badge has no kicker line, so the button beside it is single-line too,
+   and both are centred on the same axis. */
+.hero__actions { align-items: center; }
+.hero__see { gap: var(--sp-2); }
+
+.ctaf-badge { margin-inline: auto; }
+
+@media (max-width: 640px) {
+  .pbadge--lg { width: 172px; }
+  .hdr-badge { width: 116px; margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pbadge { transition: none; }
+  .pbadge:hover { transform: none; }
+}
