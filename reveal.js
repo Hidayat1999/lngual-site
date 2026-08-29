@@ -1,4 +1,4 @@
-/* Lngual — scroll reveal + sticky header state. No dependencies.
+/* Lngual - scroll reveal + sticky header state. No dependencies.
    The hidden state lives behind .js-reveal on <html>, which an inline
    bootstrap in each <head> sets synchronously. That bootstrap also reveals
    everything after 2s if this file never boots, so a blocked or failed

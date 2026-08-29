@@ -1,6 +1,6 @@
-/* ===== FOUNDATION — tokens, reset, base, buttons, a11y =============== */
+/* ===== FOUNDATION - tokens, reset, base, buttons, a11y =============== */
 /* =========================================================================
-   LNGUAL — FOUNDATION LAYER
+   LNGUAL - FOUNDATION LAYER
    Tokens, reset, base elements, layout primitives, buttons, a11y utilities.
    Section styles (header, hero, steps, showcase, dark CTA, footer, legal
    documents) belong in later layers and must build on what is defined here.
@@ -10,26 +10,26 @@
 
 :root {
   /* Brand */
-  --brand: #7A1FE0;         /* links, eyebrows, focus ring — 6.8:1 on white */
-  --brand-deep: #5810A0;    /* strong brand text, pressed — 10.5:1 on white */
-  --brand-bright: #8820F0;  /* two-tone headline accent — 6.0:1 on white */
+  --brand: #7A1FE0;         /* links, eyebrows, focus ring - 6.8:1 on white */
+  --brand-deep: #5810A0;    /* strong brand text, pressed - 10.5:1 on white */
+  --brand-bright: #8820F0;  /* two-tone headline accent - 6.0:1 on white */
   --brand-grad: linear-gradient(135deg, #8B22F0, #5A10A4);
   --brand-grad-hover: linear-gradient(135deg, #7A18DE, #4B0C8C);
 
-  /* Brand tints — backgrounds only, never text */
+  /* Brand tints - backgrounds only, never text */
   --tint-050: #FAF7FF;  --tint-100: #F3EDFC;  --tint-200: #E7DBF8;
   --tint-line: rgba(122, 31, 224, 0.16);
 
   /* Neutrals */
   --ink: #101828;           /* headings + dark section background */
   --ink-soft: #1D2939;
-  --body: #475467;          /* primary body copy — 7.7:1 on white */
-  --muted: #667085;         /* secondary copy — 5.0:1 on white */
+  --body: #475467;          /* primary body copy - 7.7:1 on white */
+  --muted: #667085;         /* secondary copy - 5.0:1 on white */
   --faint: #98A2B3;         /* decorative text only, never essential */
   --hairline: rgba(16, 24, 40, 0.08);
   --hairline-strong: rgba(16, 24, 40, 0.14);
 
-  /* Secondary accents — decorative curves, sparing use */
+  /* Secondary accents - decorative curves, sparing use */
   --accent-yellow: #F5BB00;  --accent-teal: #67A2B9;  --accent-coral: #FF7A45;
   /* text-safe siblings of those hues, AA on white */
   --accent-teal-ink: #2E6C84;  --accent-coral-ink: #C2410C;
@@ -40,7 +40,7 @@
   --surface-alt: #F9FAFB;
   --hero-grad: linear-gradient(167deg, #FDFCFF 8%, #F4EEFC 50%, #EEF1F9 92%);
 
-  /* Semantic text — flipped wholesale by .theme-dark */
+  /* Semantic text - flipped wholesale by .theme-dark */
   --text-heading: var(--ink);
   --text-body: var(--body);
   --text-muted: var(--muted);
@@ -67,7 +67,7 @@
 
   --measure: 60ch;
 
-  /* Spacing — 4 8 12 16 24 32 40 48 64 80 96 112 */
+  /* Spacing - 4 8 12 16 24 32 40 48 64 80 96 112 */
   --sp-1: 0.25rem;  --sp-2: 0.5rem;   --sp-3: 0.75rem;  --sp-4: 1rem;
   --sp-5: 1.5rem;   --sp-6: 2rem;     --sp-7: 2.5rem;   --sp-8: 3rem;
   --sp-9: 4rem;     --sp-10: 5rem;    --sp-11: 6rem;    --sp-12: 7rem;
@@ -182,7 +182,7 @@ h4, h5, h6 {
   letter-spacing: -0.01em;
 }
 
-/* The signature display treatment. Put it on any element that must shout —
+/* The signature display treatment. Put it on any element that must shout -
    the hero h1, or a section h2 that carries the page. */
 .display {
   font-size: var(--fs-display);
@@ -348,7 +348,7 @@ button:focus-visible,
 .btn-pill.btn-lg { border-radius: var(--r-pill); }
 .btn-block { display: flex; width: 100%; }
 
-/* Primary — the purple gradient */
+/* Primary - the purple gradient */
 .btn-primary {
   color: #FFFFFF;
   background-color: var(--brand-deep);   /* fallback under the gradient */
@@ -365,7 +365,7 @@ button:focus-visible,
 
 .btn-primary:active { transform: translateY(0); box-shadow: var(--shadow-brand); }
 
-/* Ghost — white with a hairline border */
+/* Ghost - white with a hairline border */
 .btn-ghost {
   color: var(--ink);
   background-color: #FFFFFF;
@@ -390,7 +390,7 @@ button:focus-visible,
 
 .theme-dark .btn-ghost:hover { color: var(--ink); background-color: #FFFFFF; border-color: #FFFFFF; }
 
-/* Ink — the solid near-black pill (store button, header CTA) */
+/* Ink - the solid near-black pill (store button, header CTA) */
 .btn-ink { color: #FFFFFF; background-color: var(--ink); border-color: var(--ink); }
 .btn-ink:hover { color: #FFFFFF; background-color: var(--ink-soft); transform: translateY(-1px); }
 .btn-ink:active { transform: translateY(0); }
@@ -398,7 +398,7 @@ button:focus-visible,
 .theme-dark .btn-ink { color: var(--ink); background-color: #FFFFFF; border-color: #FFFFFF; }
 .theme-dark .btn-ink:hover { color: var(--ink); background-color: #ECEFF4; }
 
-/* Quiet — text-weight action for the header nav */
+/* Quiet - text-weight action for the header nav */
 .btn-quiet { color: var(--body); background-color: transparent; padding-inline: 0.75rem; }
 .btn-quiet:hover { color: var(--ink); background-color: var(--tint-100); }
 .theme-dark .btn-quiet { color: #D0D5DD; }
@@ -477,9 +477,9 @@ button:focus-visible,
   .btn:active { transform: none !important; }
 }
 
-/* ===== MOTION — scroll reveal + sticky header ======================== */
+/* ===== MOTION - scroll reveal + sticky header ======================== */
 /* ==========================================================================
-   Motion — scroll reveal + sticky header state
+   Motion - scroll reveal + sticky header state
    Behaviour lives in /reveal.js: it adds .is-visible to .reveal elements and
    .is-stuck to the header. No-JS safety net (put in <head> of every page):
    <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
@@ -509,7 +509,7 @@ button:focus-visible,
   will-change: auto;
 }
 
-/* Distance variants — set the token, the transition is inherited. */
+/* Distance variants - set the token, the transition is inherited. */
 .reveal--fade { --reveal-distance: 0px; }
 .reveal--sm   { --reveal-distance: 12px; }
 .reveal--lg   { --reveal-distance: 40px; }
@@ -574,7 +574,7 @@ button:focus-visible,
   }
 }
 
-/* ===== HERO DECOR — hand-drawn accent curves ========================= */
+/* ===== HERO DECOR - hand-drawn accent curves ========================= */
 /* ---- Hero decorative curves ---- */
 .hero {
   position: relative;
@@ -641,18 +641,18 @@ button:focus-visible,
 DECISIONS
 - Every path is stroke-only (`fill="none"` on the svg AND no fill on the path), `stroke-linecap="round"`, `stroke-linejoin="round"`, width 6-8. Each is two chained cubic beziers with deliberately uneven control points, so no curve reads as a circular arc.
 - Mobile hiding: `.decor-3` (coral, mid-left) and `.decor-4` (teal, mid-right) are the ones that sit at headline and lede height, so they are `display: none` below 768px. `.decor-5` goes at 480px. `.decor-1` and `.decor-2` stay because they sit in the top corners above the content.
-- Contrast safety: nothing is placed behind the centred text column at desktop widths — the curves live in the outer 0-18% and 82-100% bands. Give `.hero-inner` a `max-width` around 780-880px with `margin-inline: auto` and text never crosses a stroke. Opacity is dialled per curve (.8-.95) so a stroke that does clip a wide element still stays quiet.
+- Contrast safety: nothing is placed behind the centred text column at desktop widths - the curves live in the outer 0-18% and 82-100% bands. Give `.hero-inner` a `max-width` around 780-880px with `margin-inline: auto` and text never crosses a stroke. Opacity is dialled per curve (.8-.95) so a stroke that does clip a wide element still stays quiet.
 - `overflow: hidden` lives on both `.hero` and `.hero-decor`, so the page body never gains a horizontal scrollbar from the negative offsets.
-- `will-change` is deliberately omitted — five permanently-composited layers is not worth the memory; `translate3d` in the keyframes already promotes them during animation.
+- `will-change` is deliberately omitted - five permanently-composited layers is not worth the memory; `translate3d` in the keyframes already promotes them during animation.
 - No external requests, no filters, no masks. Total added CSS ~1.6KB, markup ~2.2KB.
 
 /* ===== HEADER ======================================================== */
 /* --- HEADER ------------------------------------------------------------- */
 /* Sticky and transparent over the hero gradient. The scrolled state
    (.is-stuck: hairline + translucent backdrop) and the reserved transparent
-   border-bottom live in the motion layer — do not redeclare them here. */
+   border-bottom live in the motion layer - do not redeclare them here. */
 
-/* Skip link — the first focusable element on every page. It is parked with
+/* Skip link - the first focusable element on every page. It is parked with
    `top`, not `transform`, on purpose: the global prefers-reduced-motion block
    neutralises transforms, which would strand a translated skip link on screen.
    If the base layer already ships a .skip-link, delete this block. */
@@ -720,7 +720,7 @@ DECISIONS
   box-shadow: var(--shadow-soft);
 }
 
-/* Nav — no hamburger: below 640px the text links simply drop out and the
+/* Nav - no hamburger: below 640px the text links simply drop out and the
    wordmark plus the Play button carry the header. Every link here is repeated
    in the footer, so nothing becomes unreachable on a phone. */
 
@@ -871,7 +871,7 @@ DECISIONS
 .btn-ghost .hero__store-kicker { color: var(--brand); }      /* 6.7:1 on --surface */
 .btn-ghost:hover .hero__store-kicker { color: var(--brand-deep); }
 
-/* Hero product mock — a built-in illustration of the app, never a screenshot.
+/* Hero product mock - a built-in illustration of the app, never a screenshot.
    Everything is markup; the only image is the 22px app icon in the phone's app
    bar. All copy inside is illustrative product content, and the whole block is
    one role="img" with a single label, so none of it reaches the a11y tree. */
@@ -1555,7 +1555,7 @@ DECISIONS
 
 /* ===== FEATURES ====================================================== */
 /* ==========================================================================
-   Features — eyebrow, two-tone h2, six-card grid (1 / 2 / 3 columns)
+   Features - eyebrow, two-tone h2, six-card grid (1 / 2 / 3 columns)
    Depends on the foundation layer (tokens, .section, .wrap, .eyebrow, .accent)
    and the motion layer (.reveal, [data-stagger]).
    ========================================================================== */
@@ -1639,7 +1639,7 @@ DECISIONS
   text-wrap: pretty;
 }
 
-/* Hover lift — pointer devices only, so it never sticks after a tap. */
+/* Hover lift - pointer devices only, so it never sticks after a tap. */
 @media (hover: hover) and (pointer: fine) {
   .features-card:hover {
     transform: translateY(-3px);
@@ -1668,7 +1668,7 @@ DECISIONS
   background-image: linear-gradient(167deg, var(--tint-050) 6%, var(--tint-100) 52%, var(--surface-alt) 96%);
 }
 
-/* No overflow:hidden here — nothing reaches the edge, and clipping would cut
+/* No overflow:hidden here - nothing reaches the edge, and clipping would cut
    off the mock's drop shadow once card padding drops to 1.5rem on narrow screens. */
 .tx__card {
   display: grid;
@@ -1785,7 +1785,7 @@ DECISIONS
   color: var(--text-heading);
 }
 
-/* 11px label — pinned to the stronger body ink so it clears 4.5:1 on --surface. */
+/* 11px label - pinned to the stronger body ink so it clears 4.5:1 on --surface. */
 .tx__sub {
   overflow: hidden;
   font-size: 0.6875rem;
@@ -1886,7 +1886,7 @@ DECISIONS
   100% { opacity: 0; transform: scale(1); }
 }
 
-/* 11px caption sitting on --surface-alt — needs the stronger ink for AA. */
+/* 11px caption sitting on --surface-alt - needs the stronger ink for AA. */
 .tx__kept {
   display: flex;
   align-items: center;
@@ -2083,7 +2083,7 @@ DECISIONS
 
 /* ===== DOCPAGES ====================================================== */
 /* =========================================================================
-   LAYER: LEGAL DOCUMENTS — privacy.html, delete-account.html
+   LAYER: LEGAL DOCUMENTS - privacy.html, delete-account.html
    Scoped to main.doc and its existing children (.doc-header, .updated,
    .toc, .table-wrap, .callout). No markup change is required; every colour
    comes from a foundation token. New names are prefixed doc- / --doc-.
@@ -2091,7 +2091,7 @@ DECISIONS
 
 /* --- Document shell ----------------------------------------------------- */
 /* Grid, not block flow, so the TOC can become a sticky rail at >=1100px.
-   Keep row-gap at 0 — the row-spanning sidebar would otherwise put a gap
+   Keep row-gap at 0 - the row-spanning sidebar would otherwise put a gap
    between each of its empty implicit rows. Margins do not collapse inside a
    grid, so each vertical gap below is the sum of the two margins meeting. */
 
@@ -2193,7 +2193,7 @@ DECISIONS
 }
 
 /* The sticky header must be cleared whenever a heading is scrolled to, not
-   only while it matches :target — a fragment landing, a back/forward
+   only while it matches :target - a fragment landing, a back/forward
    restore, and a repeat click on an already-targeted link all scroll
    without :target being newly applied first. */
 
@@ -2312,7 +2312,7 @@ DECISIONS
   color: var(--brand-deep);
 }
 
-/* --muted on --tint-100 is 4.34:1 — under AA. Both states that paint the
+/* --muted on --tint-100 is 4.34:1 - under AA. Both states that paint the
    deeper tint behind the counter must therefore recolour it; --brand on
    --tint-100 is 5.91:1. */
 
@@ -2332,7 +2332,7 @@ DECISIONS
    is unsupported the block is dropped and the TOC stays the two-column card
    tablets get. The row-spanning grid item is what lets a flat document sit
    beside a sticky sidebar with no wrapper element. The span must exceed the
-   document's direct-child count or the rail stops sticking partway down —
+   document's direct-child count or the rail stops sticking partway down -
    privacy.html is at 84, so 400 leaves real headroom. Spanned rows past the
    last one are implicit and zero-height, so the surplus costs nothing. */
 
@@ -2422,7 +2422,7 @@ DECISIONS
   background-color: var(--tint-050);
 }
 
-/* No overflow:hidden on the callout — it would clip the focus ring of the
+/* No overflow:hidden on the callout - it would clip the focus ring of the
    support mailto link this box exists to hold. The bar rounds its own left
    corners instead; the radii scale down to the 4px width, which lands on the
    same shape the clip produced. */
@@ -2481,7 +2481,7 @@ DECISIONS
 
 /* ===== NOTFOUND ====================================================== */
 /* ==========================================================================
-   404 — "Page not found". Single-screen page on the hero gradient.
+   404 - "Page not found". Single-screen page on the hero gradient.
    Scoped to .nf-* ; used only by 404.html.
    ========================================================================== */
 
@@ -2688,7 +2688,7 @@ DECISIONS
 
 /* 1a. The no-JS floor. Without reveal.js neither .is-stuck nor .is-over-dark
    is ever set, so the header stayed fully transparent and its --ink wordmark
-   travelled over the #101828 CTA section at 1.1:1 — invisible. An opaque
+   travelled over the #101828 CTA section at 1.1:1 - invisible. An opaque
    default costs nothing visually: at rest the header sits above the hero on
    --page-bg #FFFFFF, so painting that same white is a no-op, and .is-stuck
    replaces it the moment the page scrolls. */
@@ -2701,7 +2701,7 @@ DECISIONS
    which composites to #361B68; 0.72 ink over that lands on #1B193A. Every
    ratio below is measured against #1B193A, never the flat #101828. */
 header.site-header.is-over-dark {
-  --focus-color: #E4D2FF;   /* 12.0:1 on #1B193A — --brand-bright is 2.9:1 */
+  --focus-color: #E4D2FF;   /* 12.0:1 on #1B193A - --brand-bright is 2.9:1 */
   --focus-halo: var(--ink);
   background-color: rgba(16, 24, 40, 0.94);   /* fallback path: near-opaque */
   border-bottom-color: rgba(255, 255, 255, 0.16);
@@ -2741,7 +2741,7 @@ header.site-header.is-over-dark {
 
 /* 1c. The two header focus rings were hard-coded to --brand (#7A1FE0):
    2.5:1 on the dark bar, under the 3:1 SC 1.4.11 asks of a focus indicator.
-   Routed through --focus-color, which 1b re-points on dark — 5.98:1 over the
+   Routed through --focus-color, which 1b re-points on dark - 5.98:1 over the
    light hero, 12.0:1 over the dark bar. */
 .site-header .hdr-brand:focus-visible,
 .site-header .hdr-link:focus-visible {
@@ -2772,14 +2772,14 @@ header.site-header.is-over-dark {
   text-wrap: balance;
 }
 
-/* ===== COLOUR ROTATION — per-section accent hues ===================== */
+/* ===== COLOUR ROTATION - per-section accent hues ===================== */
 /* ===== ACCENT ROTATION =============================================== */
 /* ==========================================================================
    Per-section accent rotation. Appended last, so every rule here overrides an
    earlier layer, and every rule is scoped to the section that owns the hue.
 
    Purple stays the spine: hero, all four two-tone headlines, both primary
-   CTAs, the logo, every link. What rotates is the second tier — the section
+   CTAs, the logo, every link. What rotates is the second tier - the section
    eyebrows, the step numerals, the six feature tiles, and the chips, checks
    and tags inside the translation mock.
 
@@ -2791,16 +2791,16 @@ header.site-header.is-over-dark {
 
    Every accent that is TEXT clears 4.5:1 on its own ground, so each hue is
    used through its AA-safe ink and never through its decorative sibling.
-   #F5BB00 measures 1.75:1 on white, so it appears only as a fill — the
-   features bar — with the amber ink beside it carrying the label.
+   #F5BB00 measures 1.75:1 on white, so it appears only as a fill - the
+   features bar - with the amber ink beside it carrying the label.
    ========================================================================== */
 
 :root {
   /* AA-safe siblings, extending the --accent-*-ink pattern in the foundation
      layer. Ratios are against #FFFFFF. */
-  --accent-teal-deep: #14495D;   /* 9.81:1 — deep end of the numeral ramp  */
-  --accent-coral-deep: #9A3412;  /* 7.31:1 — glyph on a coral tile         */
-  --accent-amber-ink: #8A5A00;   /* 5.93:1 — the text-safe gold            */
+  --accent-teal-deep: #14495D;   /* 9.81:1 - deep end of the numeral ramp  */
+  --accent-coral-deep: #9A3412;  /* 7.31:1 - glyph on a coral tile         */
+  --accent-amber-ink: #8A5A00;   /* 5.93:1 - the text-safe gold            */
 
   /* Icon tiles, rest and hover. Each hover step is deeper than its rest
      value and still holds its glyph at 4.5:1 or better. */
@@ -2816,7 +2816,7 @@ header.site-header.is-over-dark {
 
 /* --- Section flag: bar in the pure hue, label in the safe ink ----------- */
 /* The bar is what lets #F5BB00 onto the page at a size where it reads. It is
-   decoration — the eyebrow text beside it carries the label — so 1.75:1 is
+   decoration - the eyebrow text beside it carries the label - so 1.75:1 is
    not a 1.4.11 failure. Scoped to the three landing sections, so the legal
    pages and 404 keep the plain eyebrow. */
 
@@ -2839,14 +2839,14 @@ header.site-header.is-over-dark {
   background-color: var(--eyebrow-bar, currentColor);
 }
 
-/* --- 2. HOW IT WORKS — teal --------------------------------------------- */
+/* --- 2. HOW IT WORKS - teal --------------------------------------------- */
 
 .hiw { --eyebrow-bar: var(--accent-teal); }          /* #67A2B9 fill        */
 
 .hiw .eyebrow { color: var(--accent-teal-ink); }     /* 5.84:1 on #FFFFFF   */
 
 /* The numerals are the loudest thing in the section, so they take the hue in
-   full — the same two-stop ramp the purple version used, in teal.
+   full - the same two-stop ramp the purple version used, in teal.
    #2E6C84 5.84:1 -> #14495D 9.81:1 on white; solid fallback 5.84:1. */
 .hiw .hiw__num { color: var(--accent-teal-ink); }
 
@@ -2868,12 +2868,12 @@ header.site-header.is-over-dark {
   }
 }
 
-/* Connectors and step rules — decoration, lifted from purple at 0.16 alpha
+/* Connectors and step rules - decoration, lifted from purple at 0.16 alpha
    (1.31:1) to teal at 1.76:1 and 1.44:1. */
 .hiw .hiw__link { color: rgba(46, 108, 132, 0.38); }
 .hiw .hiw__step { border-top-color: rgba(46, 108, 132, 0.26); }
 
-/* --- 3. FEATURES — amber flag, four-hue tile sequence ------------------- */
+/* --- 3. FEATURES - amber flag, four-hue tile sequence ------------------- */
 
 .features { --eyebrow-bar: var(--accent-yellow); }     /* #F5BB00 fill only */
 
@@ -2923,7 +2923,7 @@ header.site-header.is-over-dark {
 }
 
 /* Same specificity as the original hover pair and appended after it, so the
-   lift still fires — now in each card's own hue. */
+   lift still fires - now in each card's own hue. */
 @media (hover: hover) and (pointer: fine) {
   .features-card:hover { border-color: var(--fx-line); }
 
@@ -2933,7 +2933,7 @@ header.site-header.is-over-dark {
   }
 }
 
-/* --- 4. TRANSLATION — coral --------------------------------------------- */
+/* --- 4. TRANSLATION - coral --------------------------------------------- */
 
 .tx { --eyebrow-bar: var(--accent-coral); }          /* #FF7A45 fill        */
 
@@ -2943,7 +2943,7 @@ header.site-header.is-over-dark {
 .tx .tx__check path { stroke: var(--accent-coral-deep); }   /* 6.16:1 on it */
 
 /* The translated bubble is the one moment the feature is actually happening,
-   so it is the one bubble that changes hue — and it now reads as a different
+   so it is the one bubble that changes hue - and it now reads as a different
    thing from the purple "you" bubble under it instead of echoing it. */
 .tx .tx__b--trans {
   border-color: rgba(194, 65, 12, 0.28);
@@ -2960,10 +2960,10 @@ header.site-header.is-over-dark {
 .tx .tx__tap::after { border-color: rgba(194, 65, 12, 0.28); }
 
 /* Deliberately not rotated: .tx__avatar and .tx__b--me keep the brand
-   gradient — that pair is the product, and the product is purple — and
+   gradient - that pair is the product, and the product is purple - and
    .tx__more stays a purple link like every other link on the site. */
 
-/* ===== A11Y FIXES — header over dark, contrast, focus ================ */
+/* ===== A11Y FIXES - header over dark, contrast, focus ================ */
 /* ===== A11Y FIXES ==================================================== */
 /* =========================================================================
    Appended last on purpose, and every selector here is deliberately one step
@@ -2977,7 +2977,7 @@ header.site-header.is-over-dark {
 
 /* 1a. The no-JS floor. Without reveal.js neither .is-stuck nor .is-over-dark
    is ever set, so the header stayed fully transparent and its --ink wordmark
-   travelled over the #101828 CTA section at 1.1:1 — invisible. An opaque
+   travelled over the #101828 CTA section at 1.1:1 - invisible. An opaque
    default costs nothing visually: at rest the header sits above the hero on
    --page-bg #FFFFFF, so painting that same white is a no-op, and .is-stuck
    replaces it the moment the page scrolls. */
@@ -2990,7 +2990,7 @@ header.site-header.is-over-dark {
    which composites to #361B68; 0.72 ink over that lands on #1B193A. Every
    ratio below is measured against #1B193A, never the flat #101828. */
 header.site-header.is-over-dark {
-  --focus-color: #E4D2FF;   /* 12.0:1 on #1B193A — --brand-bright is 2.9:1 */
+  --focus-color: #E4D2FF;   /* 12.0:1 on #1B193A - --brand-bright is 2.9:1 */
   --focus-halo: var(--ink);
   background-color: rgba(16, 24, 40, 0.94);   /* fallback path: near-opaque */
   border-bottom-color: rgba(255, 255, 255, 0.16);
@@ -3030,7 +3030,7 @@ header.site-header.is-over-dark {
 
 /* 1c. The two header focus rings were hard-coded to --brand (#7A1FE0):
    2.5:1 on the dark bar, under the 3:1 SC 1.4.11 asks of a focus indicator.
-   Routed through --focus-color, which 1b re-points on dark — 5.98:1 over the
+   Routed through --focus-color, which 1b re-points on dark - 5.98:1 over the
    light hero, 12.0:1 over the dark bar. */
 .site-header .hdr-brand:focus-visible,
 .site-header .hdr-link:focus-visible {
@@ -3061,10 +3061,10 @@ header.site-header.is-over-dark {
   text-wrap: balance;
 }
 
-/* ===== DOC TABLES — small-screen treatment =========================== */
+/* ===== DOC TABLES - small-screen treatment =========================== */
 /* ===== DOCTABLES ===================================================== */
 /* =========================================================================
-   LAYER: LEGAL DOCUMENT TABLES + PAGE SHELL — privacy.html, delete-account.html
+   LAYER: LEGAL DOCUMENT TABLES + PAGE SHELL - privacy.html, delete-account.html
    Sits after DOCPAGES and overrides three of its rules. Nothing here applies
    to any page that does not have a <main class="doc">.
    ========================================================================= */
@@ -3075,7 +3075,7 @@ header.site-header.is-over-dark {
    (delete-account.html) still pushes the footer to the bottom of the viewport
    instead of leaving it floating mid-screen. :has() is already a dependency of
    the DOCPAGES sticky-TOC rail; where it is unsupported the page simply flows
-   as a block, which is what it does today. The sticky header is unaffected —
+   as a block, which is what it does today. The sticky header is unaffected -
    a flex item can still be position: sticky. */
 
 body:has(> main.doc) {
@@ -3092,7 +3092,7 @@ body:has(> main.doc) {
 /* --- Small-screen tables: one card per row ------------------------------ */
 /* DEFECT FIX. DOCPAGES pairs `.table-wrap { overflow-x: auto }` with
    `table { min-width: 32rem }`, which forced all three data tables into a
-   sideways scroll on every phone — with no visible cue that anything was off
+   sideways scroll on every phone - with no visible cue that anything was off
    to the right, and with the row's first cell scrolling out of sight, so a
    reader who did scroll lost the label for the value they were reading. It
    also fails WCAG 2.1 SC 1.4.10 Reflow: at 400% zoom the viewport is ~320 CSS
@@ -3141,7 +3141,7 @@ body:has(> main.doc) {
   .doc .table-wrap thead { display: none; }
 
   /* Card. The tinted first cell, not the hairline, is what separates one row
-     from the next — a filled block plus the gap reads as a boundary without
+     from the next - a filled block plus the gap reads as a boundary without
      depending on border contrast. */
   .doc .table-wrap tbody tr {
     margin-bottom: 0.875rem;
@@ -3190,7 +3190,7 @@ body:has(> main.doc) {
   .doc + .ctaf-footer { border-top: 0; }
 }
 
-/* ===== DOC STEPS — account deletion procedure ======================== */
+/* ===== DOC STEPS - account deletion procedure ======================== */
 /* --- Key steps card ------------------------------------------------------ */
 /* delete-account.html only. The in-app deletion sequence is what most people
    arrive for, so it is lifted clear of the prose: the full document shell
@@ -3227,7 +3227,7 @@ body:has(> main.doc) {
 
 /* A counter, not a list marker: the number is a painted badge, and .doc
    li::marker would otherwise still colour a bullet that must not appear.
-   The badge is absolutely positioned rather than made a flex item — these
+   The badge is absolutely positioned rather than made a flex item - these
    steps carry inline <strong>, and display: flex on the li blows each phrase
    apart into separate flex items ("Go to | Settings | ."). */
 
@@ -3273,7 +3273,7 @@ body:has(> main.doc) {
 
 /* The connector spans exactly the padding gap a step leaves above the next
    badge, so it never has to know how tall either row grew once its text
-   wrapped — which it does at 360px. */
+   wrapped - which it does at 360px. */
 
 .doc .doc-steps__list > li::after {
   content: "";
@@ -3349,7 +3349,7 @@ body:has(> main.doc) {
 /* ===== GOOGLE PLAY BADGE ============================================== */
 /* Google's official badge, used unmodified per their brand guidelines:
    no recolouring, no monochrome variant, no cropping or filters. Only
-   size, a focus ring and a hover lift are applied — none of which alter
+   size, a focus ring and a hover lift are applied - none of which alter
    the artwork itself. */
 
 .pbadge {
